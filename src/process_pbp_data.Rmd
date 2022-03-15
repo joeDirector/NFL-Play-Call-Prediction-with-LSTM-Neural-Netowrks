@@ -2,7 +2,7 @@
 title: "Process Play by Play Data from nflfastR"
 author: "Joseph Director"
 date: "3/2/2022"
-output: html_document
+output: word_document
 ---
 
 ## Introduction 
