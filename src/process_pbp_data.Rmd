@@ -1,0 +1,192 @@
+---
+title: "Process Play by Play Data from nflfastR"
+author: "Joseph Director"
+date: "3/2/2022"
+output: html_document
+---
+
+## Introduction 
+
+The following R script is designed to load and clean play by play data for the 2019 season from the `nflfastR` package. This produces an exportable `.csv` file for the purpose of analyzing and fitting models.  
+## Load Libraries
+
+```{r}
+library(tidyverse)
+library(nflfastR)
+library(caret)
+```
+
+## Load Data
+
+```{r}
+options(nflreadr.verbose = FALSE)
+pbp <- load_pbp(2019)
+```
+
+## Check Structure
+
+```{r}
+dim(pbp)
+```
+
+Currently, there are 48034 rows representing each play in the 2019 season and 372 columns representing various features related to a particular play. Get a preview of the data:
+
+```{r}
+head(pbp)
+```
+
+## Filter Rows
+
+First, filter rows to reflect the goals of the study. Only regular season games are being considered as well as only plays that are either a run or a pass (this excludes special teams plays, pre-snap penalties, pre-snap timeouts, spikes, kneels, and two point conversions/extra points). 
+
+```{r}
+pbp  <- pbp %>%
+  filter(play_type == 'run' | play_type == 'pass') %>%
+  filter(season_type ==  'REG') %>%
+  filter(is.na(two_point_conv_result))
+
+# check dimension after filtering
+dim(pbp)
+```
+
+## Filter Columns
+
+Now, filter raw columns to be included in the analysis or for further processing. Factors included at this stage consist of basic pre-snap in-game information (i.e. down, yards to gain, time remaining, etc.) that would be immediately available to the coaching staff of a given team. Other features like weather, time of year, and whether the game was played indoors or out are also included. The yards gained on the play are included so cumulative totals and tendencies can be added for each team. 
+
+```{r}
+pbp <- pbp %>%
+  select(play_id, game_id, posteam_type, posteam, defteam, yardline_100, half_seconds_remaining,
+         game_half, down, ydstogo, play_type, shotgun, no_huddle, posteam_timeouts_remaining,
+         defteam_timeouts_remaining, score_differential, roof, temp, wind, yards_gained)
+```
+
+## Handle NAs
+
+The temperature and wind are NA if the game was played inside a dome. Set the wind to 0 in these cases and the temperature to 72 degrees Fahrenheit (the usual temperature that is set for indoor games).
+
+```{r}
+pbp <- pbp %>%
+  mutate_at(vars(wind), ~replace_na(.,0)) %>%
+  mutate_at(vars(temp), ~replace_na(.,72))
+```
+
+## One-Hot Encode Categorical Features
+
+Categorical feature variables must be presented as one-hot encoded columns in order to be correctly interpreted by models late in the analysis. The target variable (whether the play is a run or a pass) is also encoded where a pass is a "positive case". 
+
+```{r}
+pbp <- pbp %>%
+  mutate(posteam_home = ifelse(posteam_type == "home", 1, 0),
+         frst_d = ifelse(down == 1, 1, 0),
+         scnd_d = ifelse(down == 2, 1, 0),
+         thrd_d = ifelse(down == 3, 1, 0),
+         frth_d = ifelse(down == 4, 1, 0),
+         half1 = ifelse(game_half == "Half1", 1, 0),
+         dome = ifelse(roof == "dome", 1, 0),
+         outdoors = ifelse(roof == "outdoors", 1, 0),
+         closed = ifelse(roof == "closed", 1, 0),
+         open = ifelse(roof == "open", 1, 0),
+         pass = ifelse(play_type == "pass", 1, 0),
+         run = ifelse(play_type == "run", 1, 0)) %>%
+  select(-posteam_type, -game_half, -roof, -play_type, -down)
+```
+
+The offensive and defensive team will also be considered as a categorical feature. These columns will need to be one hot encoded as well.
+
+```{r}
+# use the dummyVars function from caret since the team columns have many possible values
+posteam_dummys <- data.frame(predict(dummyVars("~ posteam", data = pbp, fullRank = T), newdata = pbp))
+defteam_dummys <- data.frame(predict(dummyVars("~ defteam", data = pbp, fullRank = T), newdata = pbp))
+
+pbp <- cbind(pbp, posteam_dummys, defteam_dummys)
+```
+
+
+## Feature Engineering
+
+### Cumulative Offensive Run/Pass Tendencies
+
+The defensive team's coaching staff will have a general sense of the opposition's play call tendency as the year progresses. This aspect can be built in to the feature space in two ways; through including the offensive teams overall effectiveness at running/passing (total yards gained per play) and their overall pass to run ratio. Note that both these values are lagged as to not include information that would be gained at the end of a given play.  
+
+```{r}
+## Add columns for cumulative run or pass yards gained 
+pbp <- pbp %>%
+  # categorize yards gained for pass or run plays
+  mutate(pass_yds = ifelse(pass == 1, yards_gained, 0),
+         run_yds = ifelse(pass == 0, yards_gained, 0)) %>%
+  
+  # group by each team and accumulate total pass or run yards gained
+  group_by(posteam) %>%
+  mutate(cum_pass_yds = lag(cummean(pass_yds), order_by = posteam),
+         cum_run_yds = lag(cummean(run_yds), order_by = posteam)) %>%
+  
+  # remove NAs at zero lag
+  mutate_at(vars(cum_pass_yds), ~replace_na(.,0)) %>%
+  mutate_at(vars(cum_run_yds), ~replace_na(.,0)) %>%
+  
+  # remove unwanted columns
+  select(-pass_yds, -run_yds)
+```
+
+
+```{r}
+## Add columns for cumulative pass/run ratio
+pbp <- pbp %>%
+  # group by team and accumulate pass and run plays 
+  group_by(posteam) %>%
+  mutate(cum_passes = lag(cumsum(pass), order_by = posteam),
+         cum_runs = lag(cumsum(run), order_by = posteam)) %>%
+  
+  # calculate ratios
+  mutate(ptr_ratio = cum_passes / (cum_runs + cum_passes)) %>%
+  
+  # remove NAs at zero lag
+  mutate_at(vars(ptr_ratio), ~replace_na(.,0)) %>%
+  
+  # remove unwanted columns 
+  select(-cum_passes, -cum_runs)
+```
+
+### Cumulative Defensive Yards Allowed
+
+The overall effectiveness of how the defensive team handles either the run or the pass will be an important factor for the offensive teams play call decision. This can be added to the feature space in a similar way to the cumulative offensive totals; yards allowed on runs or passes per run or pass.  
+
+```{r}
+## Add columns for cumulative run or pass yards gained 
+pbp <- pbp %>%
+  # categorize yards gained for pass or run plays
+  mutate(pass_yds_all = ifelse(pass == 1, yards_gained, 0),
+         run_yds_all = ifelse(pass == 0, yards_gained, 0)) %>%
+  
+  # group by each team and accumulate total pass or run yards gained
+  group_by(defteam) %>%
+  mutate(cum_pass_yds_all = lag(cummean(pass_yds_all), order_by = defteam),
+         cum_run_yds_all = lag(cummean(run_yds_all), order_by = defteam)) %>%
+  
+  # remove NAs at zero lag
+  mutate_at(vars(cum_pass_yds_all), ~replace_na(.,0)) %>%
+  mutate_at(vars(cum_run_yds_all), ~replace_na(.,0)) %>%
+  
+  # remove unwanted columns
+  select(-pass_yds_all, -run_yds_all, -run, -yards_gained)
+```
+
+## Preview the Final Data Frame
+
+```{r}
+head(pbp)
+```
+
+## Export Data Frame to CSV
+
+```{r, eval = FALSE}
+setwd("~/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/data")
+write.csv(pbp, "processed_pbp.csv", row.names = F)
+```
+
+
+
+
+
+
+
