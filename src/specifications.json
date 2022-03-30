@@ -1,0 +1,14 @@
+{
+    "HPC": {"value": false, "desc": "Whether or not the script is being ran locally (false) or on an HPc system (true)"},
+    
+    "LOCAL_DATA_DIR": {"value": "/Users/joe/documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/data/processed_pbp.csv", 
+        "desc": "Where .csv file containing pbp information is stored on local machine"},
+
+    "LOCAL_RESULTS_DIR": {"value": "/Users/joe/documents/mas_proj_results", "desc": "Where to store hyperparam search results on local machine"},
+    "LOCAL_TB_DIR": {"value": "/Users/joe/documents/mas_proj_results/tb", "desc": "Where to store tensorboard results on local machine"},
+
+    "CONT_FEATS": {"value": ["yardline_100", "half_seconds_remaining", "ydstogo", "posteam_timeouts_remaining", "defteam_timeouts_remaining",
+        "score_differential", "temp", "wind", "cum_pass_yds", "cum_run_yds", "ptr_ratio", "cum_pass_yds_all", "cum_run_yds_all"],
+    "desc": "List of continous features"},
+    "MAX_PLAY_LAG": {"value": 16, "desc": "1 + maximum play sequence length to consider for modeling (play sequences to consider will be strictly less than this value"}
+}
