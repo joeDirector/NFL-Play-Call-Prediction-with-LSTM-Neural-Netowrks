@@ -1,5 +1,6 @@
 ---
 title: "NFL Play Call Prediction with Recurrent Neural Networks"
+output: pdf_document
 author: "Joseph Williams Director"
 date: "Spring 2022"
 ---
@@ -7,6 +8,8 @@ date: "Spring 2022"
 ## Abstract
 
 The prevelance of data analytics in professional sports has significantly increased over the last 20 years. First popularized in the book (later turned movie) *Moneyball: The Art of Winning an Unfair Game (2003)*, the use of advanced analytics is now mainstream in the four major U.S. sports and abroad. In the National Football League (NFL), millions of dollars are invested into analytics departments and data is being used to drive decision making at every level of a team's operation. American Football, in particular, presents a case where leveraging statistical methods to learn and predict the opposition's tendencies provides a substantial competitive advantage. Specifically, the defensive team can improve its strategy by accurately predicting the offensive team's play call (whether the play is a "run" or a "pass"). To this end, many prior works have implemented popular machine learning algorithms. However, none of the works encountered have treated the data as sequential. In Football, the offensive team's current play call is dependent upon the sequence of plays called before; thus, there is a time series component to the data. In this work, we explore the ability of sequential deep learning models to predict NFL play calls. Namely, we compare the performance of Recurrent Neural Networks (RNNs) and Long Short Term Memory (LSTM) networks to baseline models (Logistic Regression and Gradient Boosted Decision Trees). Using classification accuracy and area under the receiver operating characteristic curve (ROC_AUC) as metrics, we found that sequential models out-perform baseline models. 
+
+---
 
 ## 1. Introduction 
 
