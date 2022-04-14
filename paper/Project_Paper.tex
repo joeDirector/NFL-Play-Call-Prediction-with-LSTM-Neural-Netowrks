@@ -11,15 +11,15 @@
     MS Statistics
 	\and 
 	Joshua French \\
-	University of Colorado Denver \\
+    University of Colorado Denver \\
     Advisor
     \and
     Steffen Borgwardt \\
-	University of Colorado Denver \\
+    University of Colorado Denver \\
     Graduate Committee
     \and
     Florian Pfender \\
-	University of Colorado Denver \\
+    University of Colorado Denver \\
     Graduate Committee
 	}
 
@@ -40,60 +40,92 @@
         These departments can leverage statistical methods to learn the opposition's tendencies, providing a substantial competitive advantage. 
         In particular, the defensive team can improve its strategy by accurately predicting the offensive team's play call (whether the play is a run or a pass). 
         To this end, many prior works have implemented machine learning algorithms for play call prediction. 
-        However, none of the works encountered have treated play by play data as sequential. 
+        However, none of the works encountered have treated play-by-play data as sequential. 
         In Football, the offensive team's current play call is dependent upon the sequence of plays called before; therefore, there is a time series component that a modeling strategy must account for. 
         In this work, we explore the ability of sequential deep learning models to predict NFL play calls.
         Namely, we compare the performance of Recurrent Neural Networks (RNNs) and Long Short Term Memory (LSTM) networks to baseline models (Logistic Regression and Gradient Boosted Decision Trees). 
-        Using classification accuracy and area under the receiver operating characteristic curve as metrics, we found that sequential models out-perform baseline models. 
+        Using classification accuracy and ROC-AUC as metrics, we found that sequential models out-perform the baseline. 
         \end{minipage}
     \end{abstract}
     
     \pagebreak
 
+    \tableofcontents
+    \newpage
+
+    \pagenumbering{arabic}
+
     \begin{multicols*}{2}
     
-    \section*{1. Introduction}
+    \section{Introduction}
 
-    \subsection*{1.1 Background}
-        
-        \paragraph{}
-            Gameplay of NFL football is seperated into a sequence of instances called plays. 
-            The two teams on either side of the ball are allowed to reposition themselves and prepare in betweeen these instances. 
-            Given this nature, there is immense opportunity to strategize when the game is not in play.
-            Akin to moving pieces on a chessboard, the coaching staff decides their team's best course of action by anticipating their opponent's moves.  
-            For regular plays (i.e. not a kick-off, punt, or field goal attempt), there is a binary option for the type of play the offensive team can do; either a pass or a run.
-            A strategical advantage is gained for the defensive team if they can accurately predicting this outcome. 
-            As a simplistic example, if they predict pass they can put more players in pass coverage, or put more players near the line of scrimmage if they predict run.
-        
-        \vspace{-10pt}
+        \subsection{Background}
+            
+            \paragraph{}
+                Gameplay of NFL football is seperated into a sequence of instances called plays. 
+                The two teams on either side of the ball are allowed to reposition themselves and prepare in betweeen these instances. 
+                Given this nature, there is immense opportunity to strategize when the game is not in play.
+                Akin to moving pieces on a chessboard, the coaching staff decides their team's best course of action by anticipating their opponent's moves.  
+                For regular plays (i.e. not a kick-off, punt, or field goal attempt), there is a binary option for the type of play the offensive team can do; either a pass or a run.
+                A strategic advantage is gained for the defensive team if they can accurately predict this outcome. 
+                As a simplistic example, if they predict pass they can put more players in pass coverage, or put more players near the line of scrimmage if they predict run.
+            
+            \vspace{-10pt}
 
-        \paragraph{}
-            There are a number of indicators that can inform play call prediction. 
-            Certain personnel packages (groups of players from various positions) and formations of the offensive team are more associated with either passes or runs. 
-            Unfortunately, the NFL does not publicly release data containing specific personnel or formations. 
-            However, there exists a general binary indicator for the formation; whether the play was from the shotgun (QB lines up a few yards back from the center) or under-center (QB lines up directly behind the center). 
-            Beyond this, there is the in-game context of the current play. 
-            This includes the down (how many plays can be used to gain the required distance), the distance (the amount of yards needed to gain in order to keep the ball), the score differential, the amount of time remaining, etc. 
-            The conditions of these factors all incentivize the offensive team to use either a run or a pass play. 
-            For example, if an offensive team is losing by a lot of points with little time remaining in the game, they are more likely to pass because they can gain more yards using less time. 
-            Lastly, tendencies of the offensive team can be studied. 
-            This is done by accumulating the relative frequency of passes to runs for the offensive team (pass to run ratio) as well as how successful they are at either passing or running (average yards gained per run or pass play).
-        
-        \vspace{-10pt}
-        
-        \paragraph{}
-            An NFL coach combines experience and intuition to predict the play call. 
-            In this work, experience is replaced by labeled data points from the entirety of a single NFL season (2019-2020), and intuition by a supervised machine learning algorithm. 
-            A supervised machine learning task involves teaching a computer to learn the underlying patterns relating the response variable to the predictors. 
-            If the model can discern information about the predictors and response well enough, its predictions should generalize well to unseen instances. 
-            Among the most popularly used algorithms in this domain is the field of deep learning. 
-            Deep learning uses artificial neural networks (ANNs) that loosely resemble a biological brain. 
-            They contain networks of individual neurons or nodes, each with its own activation signal, that is each capable of sending and receiving signals to other nodes (through weights). 
-            Types of deep learning algorithms vary in complexity and structure. 
-            Here we examine recurrent neural networks (RNNs) and their variant, long short term memory (LSTM) networks. 
-            These kinds of networks were originally designed for speech and text recognition because of their ability to learn sequential patterns. 
+            \paragraph{}
+                There are a number of indicators that can inform play call prediction. 
+                Certain personnel packages (groups of players from various positions) and formations of the offensive team are more associated with either passes or runs. 
+                Unfortunately, the NFL does not publicly release data containing specific personnel or formations. 
+                However, there exists a general binary indicator for the formation; whether the play was from the shotgun (QB lines up a few yards back from the center) or under-center (QB lines up directly behind the center). 
+                Beyond this, there is the in-game context of the current play. 
+                This includes the down (how many plays can be used to gain the required distance), the distance (the amount of yards needed to gain in order to keep the ball), the score differential, the amount of time remaining, etc. 
+                The conditions of these factors all incentivize the offensive team to use either a run or a pass play. 
+                For example, if an offensive team is losing by a lot of points with little time remaining in the game, they are more likely to pass because they can gain more yards using less time. 
+                Lastly, tendencies of the offensive team can be studied. 
+                This is done by accumulating the relative frequency of passes to runs for the offensive team (pass to run ratio) as well as how successful they are at either passing or running (average yards gained per run or pass play).
+            
+            \vspace{-10pt}
+            
+            \paragraph{}
+                An NFL coach combines experience and intuition to predict the play call. 
+                In this work, experience is replaced by labeled data points from the entirety of a single NFL season (2019-2020), and intuition by a supervised machine learning algorithm. 
+                A supervised machine learning task involves teaching a computer to learn the underlying patterns relating the response variable to the features. 
+                If the model can discern information about the features and response well enough, its predictions should generalize well to unseen instances. 
+                A popular domain of machine learning is the field of deep learning. 
+                Deep learning uses artificial neural networks (ANNs) that loosely resemble a biological brain. 
+                They contain networks of individual neurons or nodes, each with its own activation signal, that is each capable of sending and receiving signals to other nodes (through weights). 
+                Types of deep learning algorithms vary in complexity and structure. 
+                Here we examine recurrent neural networks (RNNs) and their variant, long short term memory (LSTM) networks. 
+                These kinds of networks were originally designed for speech and text recognition because of their ability to learn sequential patterns. 
 
-    
+        \subsection{Problem Statement}
+            \paragraph{}
+                Prior works have approached play call prediction with machine learning, many implementing complex classification algorithms such as ensemble models and multi-layer perceptrons.
+                These methods only provide marginal performance increases from simplistic models such as logistic regression.
+                This is because, as is often the case in machine learning tasks, the signal relating the response to the features is only so strong. 
+                Therefore, in these cases, the choice of a complex algorithm provides small return as there is little that the added complexity can pick up on.
+                Overcoming these performance limits requires rethinking how the data itself is structured.
+                In prior approaches, each singular play is treated as a sample point. 
+                Treating the data this way means the model isn't aware of any sequential patterns that may exist.
+                In the approach proposed by this work, an individual sample point is represented by a play sequence of length $k$. 
+                So, it is not necessarily the choice of model that motivates this study, but rather how the data is treated. 
+                The choice of model follows from algorithms that have proven to work well with sequential data. 
+            
+        \subsection{Data}
+            \paragraph{}
+                Abundant play-by-play data is made easily accessible by the \texttt{nflfastR} package in \texttt{R}. 
+                This package pre-scrapes data published officially by the NFL so no web-scraping is required as a step in preprocessing.
+                A singular season (2019-2020) was chosen as the sample for this study because the offensive and defensive teams are used as features; the coaching staffs and players for said teams are subject to change from year to year.
+                A list of features chosen for modeling is included in Table 1. 
+                Some of these features are given directly by \texttt{nflfastR}, others are acquired through feature engineering.
+                The data given is two dimensional $(n,m)$: $n$ samples (individual plays) and $m$ features. 
+                This kind of data is fed into baseline models.
+                For sequential models, three dimensional data is required $(n,k,m)$: $n$ samples, each sample consisting of $k$ consecutive plays, and $m$ features for each play in the sequence. 
+                Additional preprocessing is required to transform play-by-play data into three dimensional sequences. 
+                
+                 
+
+                
 
     \end{multicols*}
 
