@@ -1,7 +1,13 @@
-\documentclass{article}
-
+\documentclass[11pt]{article}
 \usepackage[margin={2cm,2cm}]{geometry}
 \usepackage{multicol}
+\usepackage{array}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{graphicx}
+\usepackage{blindtext}
+\graphicspath{ {/Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs} }
+
 \setlength{\columnsep}{1cm}
 
 \title{NFL Play Call Prediction Using Sequential Neural Networks}
@@ -108,25 +114,143 @@
                 In prior approaches, each singular play is treated as a sample point. 
                 Treating the data this way means the model isn't aware of any sequential patterns that may exist.
                 In the approach proposed by this work, an individual sample point is represented by a play sequence of length $k$. 
-                So, it is not necessarily the choice of model that motivates this study, but rather how the data is treated. 
-                The choice of model follows from algorithms that have proven to work well with sequential data. 
-            
+        
+        \end{multicols*}
+
+        
+
+        
+            \begin{table*}[ht]
+            \caption{Feature Descriptions} \label{tab:title} 
+            \centering
+            \begin{tabular}{|| m{4cm} | m{10cm}| m{2cm} ||} 
+                \hline
+                \textbf{Feature} & \textbf{Description} & \textbf{Type}  \\
+                \hline\hline
+                Posteam  & Name of team on offense for the current play & Categorical \\
+                \hline 
+                Defteam & Name of team on defense for the current play & Categorical \\ 
+                \hline
+                Yardline  & Distance from the goal line (yards) & Numeric \\
+                \hline 
+                Seconds remaining & Amount of time remaining in current half & Numeric \\
+                \hline
+                Yards to go & Yards needed to gain for a first down & Numeric \\
+                \hline 
+                Down & On field windspeed for the current play & Categorical \\
+                \hline 
+                Shotgun & Whether the offensive team lines up in shotgun formation & Binary \\
+                \hline
+                No huddle & Whether the offensive team used the huddle before the snap & Binary \\
+                \hline 
+                Posteam timeouts & Timeouts remaining for offensive team & Numeric \\
+                \hline
+                Defteam timeouts & Timeouts remaining for defensive team & Numeric \\
+                \hline 
+                Score differential & Difference in score between offensive and defensive team & Numeric \\
+                \hline
+                Temperature & On field temperature for the current play & Numeric \\
+                \hline 
+                Posteam Home & Whether the offensive team is on its home field & Binary \\
+                \hline 
+                Half & Whether the play is ran in first or second half & Binary \\
+                \hline 
+                Dome & Whether the field has a dome or not & Binary \\
+                \hline 
+                Open & Whether a domed field is open or closed & Binary \\
+                \hline 
+                Outdoors & Whether the game is played outdoors & Binary \\
+                \hline 
+                Cumulative run yards* & Total yards gained per run play (at current point) & Numeric  \\
+                \hline 
+                Cumulative pass yards* & Total yards gained per pass play (at current point) & Numeric \\
+                \hline
+                Pass to run ratio* & Current proportion of passes ran to total plays & Numeric \\
+                \hline
+                Pass yards allowed* & Total yards allowed per pass play (Defteam) & Numeric \\
+                \hline
+                Run yards allowed* & Total yards allowed per run play (Defteam) & Numeric \\
+                \hline
+            \end{tabular}
+            \\[11pt]
+            \caption*{*Indicates a feature acquired by feature engineering}
+            \end{table*}
+        
+    \begin{multicols*}{2}
         \subsection{Data}
             \paragraph{}
-                Abundant play-by-play data is made easily accessible by the \texttt{nflfastR} package in \texttt{R}. 
-                This package pre-scrapes data published officially by the NFL so no web-scraping is required as a step in preprocessing.
-                A singular season (2019-2020) was chosen as the sample for this study because the offensive and defensive teams are used as features; the coaching staffs and players for said teams are subject to change from year to year.
+                Abundant play-by-play data is made easily accessible by the \texttt{nflfastR} package. 
+                Data published officially by the NFL is available so no web-scraping is required as a step in preprocessing.
+                A singular season (2019) was chosen as the sample because the offensive and defensive teams are used as features; teams are subject to change from year to year. 
+                Around 32,000 individual play instances occurred over the course of this season.  
                 A list of features chosen for modeling is included in Table 1. 
                 Some of these features are given directly by \texttt{nflfastR}, others are acquired through feature engineering.
                 The data given is two dimensional $(n,m)$: $n$ samples (individual plays) and $m$ features. 
-                This kind of data is fed into baseline models.
+                This dimensions are fed into baseline models.
                 For sequential models, three dimensional data is required $(n,k,m)$: $n$ samples, each sample consisting of $k$ consecutive plays, and $m$ features for each play in the sequence. 
-                Additional preprocessing is required to transform play-by-play data into three dimensional sequences. 
-                
+                This requires additional preprocessing.
+
+    \section{Methodology}
+
+        \subsection{Aims}
+            \paragraph{}
+                Our analysis aims to implement industry standard data science practices for building and testing models.
+                This consists of building a scalable data pipeline for preprocessing, hyperparameter tuning, and model selection.
+                To this end, cloud computing resources were provisioned from Google Cloud Platform (GCP). 
+                This platform allowed for distributed model training on multiple graphics preprocessing units (GPUs); a critical resource given the computational demands of model tuning.  
+                The overall workflow for the project is given by Figure 1. 
+    
+        \end{multicols*}
+        \begin{figure}[ht]
+            \includegraphics[width = \linewidth]{workflow.png}
+            \caption{Overall Methodologic Workflow }
+            \label{fig:boat1}
+        \end{figure}
+        \begin{multicols*}{2}
+
+        \subsection{Preprocessing}
+            \paragraph{}
+                Data sampled directly from \texttt{nflfastR} contains all play types and outcomes from both the regular and post-season. 
+                For the purpose of this analysis, we are only interested in regular season plays that were either passes or runs. 
+                This meant removing all instances of special teams plays (kick-offs, punts, field goal attempts) and pre-snap penalties. 
+                It is important to note that some plays are intended to be passes but end up being runs (this is called a QB scramble). 
+                We consider these to count as passes since this was the intended play call.   
+            
+            \vspace{-10pt}
+
+            \paragraph{}
+                Missing values were only encountered for some of the weather features selected.
+                Temperature and wind are NA for games that were played inside of a dome. 
+                Inside NFL domes, the temperature is controlled and most often set to 72 degrees fahrenheit.
+                Missing values for these features were set to 0 windspeed and 72 degrees fahrenheit for all play instances occurring inside a dome. 
+            
+            \vspace{-10pt}
+
+            \paragraph{}
+                For all methods considered, binary and categorical features need to be one-hot encoded.
+                This is because machine learning models aren't able to interperet text strings directly. 
+                One-hot encoding entails creating a new column for each category of a categorical variable. 
+                The column is a 1 if an instance falls under that category and 0 if not. 
+                One-hot endcoding was chosen over integer encoding to avoid creating any ordinal pattern in the categorical features. 
+
+        \subsection{Feature Engineering}   
+            \paragraph{}
+                Cumulative tendencies are not readily available in data loaded from \texttt{nflfastR}. 
+                However, enough information is included in order to build these features into the data. 
+                For the cumulative pass to run ratio, we group the data by offensive team and calculate a running total of passes ran divided by total plays. 
+                This ensures the feature is current up to a given play; reflecting the information the defensive team would have before the snap. 
+                Similarly, we build in features communicating the offensive teams effectiveness at either passing or running.
+                The available data includes how many yards were gained for a given play. 
+                Again, we group data by offensive team and calculate a runnning total of yards gained (for each type of play) divided by how many plays were ran of that type.  
                  
+            \vspace{-10pt}
 
-                
+            \paragraph{}
+                In addition to having a sense of the offensive teams tendencies and effectiveness, the defensive team will also be aware of its own weaknesses.
+                This aspect is built into the data the same way as offensive tendencies. 
+                Instead of grouping by offensive team, we group by defensive team and add a running total of yards allowed per play type.
+        
+        \subsection{Cross Validation Splitting}         
 
-    \end{multicols*}
-
+\end{multicols*}
 \end{document}
