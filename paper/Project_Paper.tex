@@ -6,6 +6,10 @@
 \usepackage{caption}
 \usepackage{graphicx}
 \usepackage{blindtext}
+\newenvironment{Figure}
+  {\par\medskip\noindent\minipage{\linewidth}}
+  {\endminipage\par\medskip}
+
 \graphicspath{ {/Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs} }
 
 \setlength{\columnsep}{1cm}
@@ -137,7 +141,7 @@
                 \hline
                 Yards to go & Yards needed to gain for a first down & Numeric \\
                 \hline 
-                Down & On field windspeed for the current play & Categorical \\
+                Down & Number of plays to get a first down & Categorical \\
                 \hline 
                 Shotgun & Whether the offensive team lines up in shotgun formation & Binary \\
                 \hline
@@ -151,6 +155,8 @@
                 \hline
                 Temperature & On field temperature for the current play & Numeric \\
                 \hline 
+                Windspeed & On field windspeed for the current play & Numeric \\
+                \hline 
                 Posteam Home & Whether the offensive team is on its home field & Binary \\
                 \hline 
                 Half & Whether the play is ran in first or second half & Binary \\
@@ -161,19 +167,17 @@
                 \hline 
                 Outdoors & Whether the game is played outdoors & Binary \\
                 \hline 
-                Cumulative run yards* & Total yards gained per run play (at current point) & Numeric  \\
+                Cumulative run yards & Total yards gained per run play (at current point) & Numeric  \\
                 \hline 
-                Cumulative pass yards* & Total yards gained per pass play (at current point) & Numeric \\
+                Cumulative pass yards & Total yards gained per pass play (at current point) & Numeric \\
                 \hline
-                Pass to run ratio* & Current proportion of passes ran to total plays & Numeric \\
+                Pass to run ratio & Current proportion of passes ran to total plays & Numeric \\
                 \hline
-                Pass yards allowed* & Total yards allowed per pass play (Defteam) & Numeric \\
+                Pass yards allowed & Total yards allowed per pass play (Defteam) & Numeric \\
                 \hline
-                Run yards allowed* & Total yards allowed per run play (Defteam) & Numeric \\
+                Run yards allowed & Total yards allowed per run play (Defteam) & Numeric \\
                 \hline
             \end{tabular}
-            \\[11pt]
-            \caption*{*Indicates a feature acquired by feature engineering}
             \end{table*}
         
     \begin{multicols*}{2}
@@ -199,12 +203,13 @@
                 To this end, cloud computing resources were provisioned from Google Cloud Platform (GCP). 
                 This platform allowed for distributed model training on multiple graphics preprocessing units (GPUs); a critical resource given the computational demands of model tuning.  
                 The overall workflow for the project is given by Figure 1. 
+                Additional steps such as feature engineering and data visualization are included to attain a wholistic view of the data used for modeling.
     
         \end{multicols*}
         \begin{figure}[ht]
             \includegraphics[width = \linewidth]{workflow.png}
             \caption{Overall Methodologic Workflow }
-            \label{fig:boat1}
+            \label{fig:workflow}
         \end{figure}
         \begin{multicols*}{2}
 
@@ -216,7 +221,7 @@
                 It is important to note that some plays are intended to be passes but end up being runs (this is called a QB scramble). 
                 We consider these to count as passes since this was the intended play call.   
             
-            \vspace{-10pt}
+        \vspace{-10pt}
 
             \paragraph{}
                 Missing values were only encountered for some of the weather features selected.
@@ -224,33 +229,80 @@
                 Inside NFL domes, the temperature is controlled and most often set to 72 degrees fahrenheit.
                 Missing values for these features were set to 0 windspeed and 72 degrees fahrenheit for all play instances occurring inside a dome. 
             
-            \vspace{-10pt}
+        \vspace{-10pt}
 
             \paragraph{}
                 For all methods considered, binary and categorical features need to be one-hot encoded.
                 This is because machine learning models aren't able to interperet text strings directly. 
-                One-hot encoding entails creating a new column for each category of a categorical variable. 
+                One-hot encoding entails creating a new column for each level of a categorical variable. 
                 The column is a 1 if an instance falls under that category and 0 if not. 
                 One-hot endcoding was chosen over integer encoding to avoid creating any ordinal pattern in the categorical features. 
-
-        \subsection{Feature Engineering}   
+        
+        \subsection{Feature Engineering}
+            \paragraph{} 
+                Feature engineering is a vital aspect of the machine learning process. 
+                It is a method by which domain knowledge is leveraged to transform raw data into meaningful features that are capable of distinguishing classes in the response.
+                In this case, features are constructed to describe historical tendencies of both the offensive and defensive teams.
+                This information is designed to be accurate up until the current play instance. 
+            
+        \vspace{-10pt} 
+            
             \paragraph{}
                 Cumulative tendencies are not readily available in data loaded from \texttt{nflfastR}. 
-                However, enough information is included in order to build these features into the data. 
+                However, enough information is included in order to build these features. 
                 For the cumulative pass to run ratio, we group the data by offensive team and calculate a running total of passes ran divided by total plays. 
                 This ensures the feature is current up to a given play; reflecting the information the defensive team would have before the snap. 
                 Similarly, we build in features communicating the offensive teams effectiveness at either passing or running.
                 The available data includes how many yards were gained for a given play. 
                 Again, we group data by offensive team and calculate a runnning total of yards gained (for each type of play) divided by how many plays were ran of that type.  
                  
-            \vspace{-10pt}
+        \vspace{-10pt}
 
             \paragraph{}
                 In addition to having a sense of the offensive teams tendencies and effectiveness, the defensive team will also be aware of its own weaknesses.
                 This aspect is built into the data the same way as offensive tendencies. 
                 Instead of grouping by offensive team, we group by defensive team and add a running total of yards allowed per play type.
         
-        \subsection{Cross Validation Splitting}         
+        \subsection{Cross Validation Splitting}
+            \paragraph{}
+                Cross validation splitting is a method for assessing the performance of a model on unseen data. 
+                The original sample of data is partitioned into three non-overlapping subsets called training, validation, and testing.
+                Training is used for teaching the model to learn the patterns within the sample. 
+                Validation is the first unseen partition and is reserved for evaluating which hyperparameter combinations perform best. 
+                Hyperparameters, unlike model parameters, are not learned during the training algorithm and therefore need to be pre-specified by the user.
+                Given a number of candidate models performing well on the validation set, a final performance evaluation is done on the testing data. 
+                Metrics recorded at this stage are used for final reporting.
+
+            \vspace{10pt}
+                
+            \begin{Figure}  
+                \centering
+                \includegraphics[width = \linewidth]{cv.png}
+                \captionof{figure}{Cross Validation Splitting}
+                \label{fig:Cross Validation Splitting}
+            \end{Figure}
+
+            \vspace{-10pt}
+
+            \paragraph{}
+                The cross validation scheme is described in Figure 2.
+                The first 8 weeks of the NFL season are used for the training set, with weeks 9-12 as validation for evaluating hyperparameters.
+                For each model type, we then select the best 20 hyperparameter combinations for testing. 
+                Models with these combinations are retrained using weeks 1-12 and evaluated for final performance using weeks 13-17. 
+
+        \subsection{Data Visualization}
+            \paragraph{}
+                Data visualization is an important step before applying any modeling strategy.
+                At this stage, we explore the distribution of the response variable as well as its relationship to the features.
+                
+            \subsubsection*{Response Variable}
+                \paragraph{}
+                    \blindtext
+                \vspace{-10pt}
+                \paragraph{}
+                    \blindtext
+
+
 
 \end{multicols*}
 \end{document}

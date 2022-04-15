@@ -1,6 +1,6 @@
 # Fdb version 3
-["pdflatex"] 1649983375 "/Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/Project_Paper.tex" "output/Project_Paper.pdf" "Project_Paper" 1649983376
-  "/Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/Project_Paper.tex" 1649983372 16503 621f0f27c472f05af7f342c0e867f24c ""
+["pdflatex"] 1650053909 "/Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/Project_Paper.tex" "output/Project_Paper.pdf" "Project_Paper" 1650053910
+  "/Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/Project_Paper.tex" 1650053908 19511 89cdbce055befb073dbfd296b92be19c ""
   "/usr/local/texlive/2022/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm" 1136768653 1328 c834bbb027764024c09d3d2bf908b5f0 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm" 1136768653 1324 c910af8c371558dc20f2d7822f66fe64 ""
@@ -52,10 +52,11 @@
   "/usr/local/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1647878959 4410336 7d30a02e9fa9a16d7d1f8d037ba69641 ""
   "/usr/local/texlive/2022/texmf-var/web2c/pdftex/pdflatex.fmt" 1649876404 2826437 1bc585908ffc5c865e15a38125d7d363 ""
   "/usr/local/texlive/2022/texmf.cnf" 1647878952 577 209b46be99c9075fd74d4c0369380e8c ""
-  "Project_Paper.tex" 1649983372 16503 621f0f27c472f05af7f342c0e867f24c ""
+  "Project_Paper.tex" 1650053908 19511 89cdbce055befb073dbfd296b92be19c ""
+  "figs/cv.png" 1650044699 156998 de9b7ff5de92f638c51991a92602c1e5 ""
   "figs/workflow.png" 1649978357 326418 ce831ecabfeedddd2d548d05776174eb ""
-  "output/Project_Paper.aux" 1649983376 2191 d178676f8540bb1d6aab6711e79ccb81 "pdflatex"
-  "output/Project_Paper.toc" 1649983376 948 7d6b6fbfae4cd5bd27dad07c365aa958 "pdflatex"
+  "output/Project_Paper.aux" 1650053910 2941 783b2ffa69ffdd40cb15bfcb9ef1202a "pdflatex"
+  "output/Project_Paper.toc" 1650053910 1222 532296e3ab0c550d1509f73cf0f67e9d "pdflatex"
   (generated)
   "output/Project_Paper.aux"
   "output/Project_Paper.log"
