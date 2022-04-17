@@ -190,7 +190,7 @@
                 A list of features chosen for modeling is included in Table 1. 
                 Some of these features are given directly by \texttt{nflfastR}, others are acquired through feature engineering.
                 The data given is two dimensional $(n,m)$: $n$ samples (individual plays) and $m$ features. 
-                This dimensions are fed into baseline models.
+                These dimensions are fed into baseline models.
                 For sequential models, three dimensional data is required $(n,k,m)$: $n$ samples, each sample consisting of $k$ consecutive plays, and $m$ features for each play in the sequence. 
                 This requires additional preprocessing.
 
@@ -290,10 +290,10 @@
                 For each model type, we then select the best 20 hyperparameter combinations for testing. 
                 Models with these combinations are retrained using weeks 1-12 and evaluated for final performance using weeks 13-17. 
 
-        \subsection{Data Visualization}
+        \subsection{Exploratory Analysis}
             \paragraph{}
-                Data visualization is an important step before applying any modeling strategy.
-                At this stage, we explore the distribution of the response variable as well as its relationship to the features.
+                Exploring the data through table summaries and visualizations is an important step before applying any modeling strategy.
+                At this stage, we analyze the distribution of the response variable as well as its relationship to the features.
                 
             \subsubsection*{Response Variable}
                 \paragraph{}

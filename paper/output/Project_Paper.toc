@@ -21,7 +21,7 @@
 \contentsline {subsection}{\numberline {2.4}Cross Validation Splitting}{3}{}%
 \contentsline {paragraph}{}{3}{}%
 \contentsline {paragraph}{}{4}{}%
-\contentsline {subsection}{\numberline {2.5}Data Visualization}{4}{}%
+\contentsline {subsection}{\numberline {2.5}Exploratory Analysis}{4}{}%
 \contentsline {paragraph}{}{4}{}%
 \contentsline {paragraph}{}{4}{}%
 \contentsline {paragraph}{}{4}{}%
