@@ -294,13 +294,105 @@
             \paragraph{}
                 Exploring the data through table summaries and visualizations is an important step before applying any modeling strategy.
                 At this stage, we analyze the distribution of the response variable as well as its relationship to the features.
-                
+
+            \vspace{-5pt}
+
             \subsubsection*{Response Variable}
                 \paragraph{}
-                    \blindtext
+                    Understanding the distribution of the binary response variable will inform crucial aspects of applying classification models.
+                    Mainly, it gives a sense of the class imbalance. 
+                    Class imbalance exists in the data when one of the binary classes occurs much more often than the other. 
+                    In cases with heavy imbalance (one class represents 80\% or more the observations), undersampling of the dominant class or oversampling the non-dominant class may need to be applied.
+                    Table 2 shows the distribution of the response variable in the different cross validation folds.  
+                
+                \vspace{15pt}
+                
+                \begin{tabular}{|| m{2cm} | m{2cm}| m{2cm} ||}
+                    \hline
+                    \textbf{Fold} & \textbf{\% Pass} & \textbf{\% Run}  \\
+                    \hline\hline
+                    Train  & 59.50 & 40.5 \\
+                    \hline
+                    Validation & 60.01 & 39.99 \\
+                    \hline
+                    Test & 59.01 & 40.99 \\
+                    \hline
+                \end{tabular}
+                \captionof{table}{Play Call Distribution in CV Folds}
+                
+                \paragraph{}
+                    For the three splits, the play call distribution remains at a consistent 60-40 split in favor of passing plays. 
+                    This kind of distribution is described as slightly imbalanced data. 
+                    No undersampling or oversampling methods are recommended when this is the case. 
+                    Note that the overall ratio of passes to runs is the same across the cross validation folds. 
+                    The validation data needs to be a representative sample of the training data in order to ensure good results.
+            
+            \vspace{-5pt}
+            \subsubsection*{Features}
+                \paragraph{}
+                    For brevity, only the most illuminating insights relating play calls to the features are displayed.
+                    The first of which is play calls by down and distance, as illustrated in Figure 3. 
+                    Notably, it is seen that runs are favored over passes on first downs, second and short, and fourth and short situations.
+                    Large disparities between passes and runs exist for third/fourth and 4+ yards as well as second and long scenarios.
+                    This matches what is expected as offensive teams are heavily incentivized to throw the ball on later downs and longer distances (need to gain more yards using only one or two plays). 
+                    Perhaps the only surprising aspect of the plot is that passes are more common on third and short.
+                    A possible explanation is that passes are being ran on third and short when the offensive team already knows it is going to go for it on fourth down (if the third down pass attempt fails). 
+                    They are running the riskier option (a pass attempt) knowing they will get another try and then running the safer option (a run attempt) when there is only one attempt available.  
+
+                \end{multicols*}
+                \begin{figure}[ht]
+                    \includegraphics[width = \linewidth]{PlayCallByDownAndDist.png}
+                    \caption{Relative Play Call Frequency by Down and Distance}
+                    \label{fig:Play Calls}
+                \end{figure}
+                \begin{multicols*}{2}
+                
+                \paragraph{}
+                    As previously mentioned, there is little information released by the NFL pertaining to what formation the offensive team lines up in.
+                    However, they do release whether the play was from the shotgun formation or under center. 
+                    In shotgun, the quarterback (QB) lines up farther back from the line of scrimmage. 
+                    This is typically to allow more time for the QB to throw the ball before the defensive team can get to him. 
+                    The relationship between shotgun formation and play type is displayed by Figure 4. 
+                    For more context, the data is grouped by an additional category called huddle.
+                    This binary feature tells whether the hurry-up offense is being ran. 
+                    In the hurry-up, the offensive team does not meet in a huddle before running the play; this is typically done late in games to avoid losing time in between plays. 
+                    The figure confirms what is expected. 
+                    Passes are much more common in the shotgun formation and runs are much more common under center. 
+                    They remain more common for the hurry-up offense in the shotgun formation but the same result isn't true for under center, huddle plays. 
+                    It is suspected more runs are ran in this scenario because these no huddle plays are ran in normal game conditions (i.e. not with little time remaining, down by many points). 
+
+                \begin{Figure}  
+                    \centering
+                    \includegraphics[width = \linewidth]{FormationHuddle.png}
+                    \captionof{figure}{Play Frequency by Formation, Huddle}
+                    \label{fig:Play Type by Formation and Huddle}
+                \end{Figure}
+
                 \vspace{-10pt}
                 \paragraph{}
-                    \blindtext
+                    There is also some visible tendencies relating score differential and amount of time remaining to optimal play call decisions. 
+                    This relationship is explored in Figure 5 where second half plays are examined (so that seconds remaining reflects time left in the game).
+                    Passes seem to be called overwhelmingly with less than 500 seconds remaining in the game when a team is down by 0-20 points. 
+                    During this same time window, runs seem to be called more when a team is leading by 0-20 points.
+                    
+                    \end{multicols*}
+                    \begin{figure}[ht]
+                        \includegraphics[width = \linewidth]{ScoreDiffSecRem.png}
+                        \caption{Play Call by Score Differential and Seconds Remaining}
+                        \label{fig:Play Call by Score Differential and Seconds Remaining}
+                    \end{figure}
+                    \begin{multicols*}{2}
+
+                \paragraph{}
+                    
+                     
+
+
+
+                    
+
+
+                    
 
 
 
