@@ -28,3 +28,9 @@
 \contentsline {paragraph}{}{4}{}%
 \contentsline {paragraph}{}{5}{}%
 \contentsline {paragraph}{}{5}{}%
+\contentsline {paragraph}{}{6}{}%
+\contentsline {subsection}{\numberline {2.6}Sequential Models}{6}{}%
+\contentsline {paragraph}{}{6}{}%
+\contentsline {paragraph}{}{6}{}%
+\contentsline {paragraph}{}{6}{}%
+\contentsline {paragraph}{}{7}{}%
