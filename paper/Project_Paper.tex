@@ -5,12 +5,15 @@
 \usepackage{float}
 \usepackage{caption}
 \usepackage{graphicx}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
 \usepackage{blindtext}
+
 \newenvironment{Figure}
   {\par\medskip\noindent\minipage{\linewidth}}
   {\endminipage\par\medskip}
 
-\graphicspath{ {/Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs} }
+\graphicspath{ {/Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs}}
 
 \setlength{\columnsep}{1cm}
 
@@ -437,10 +440,10 @@
 
                     \begin{itemize}
                         \item $h_i := $ Vector of hidden states
-                        \item $W_h := $ Weights connecting input to hidden state
-                        \item $U_h := $ Weights connecting hidden state to previous hidden state 
+                        \item $W_h := $ Weights connecting inputs to hidden states
+                        \item $U_h := $ Weights connecting hidden states to previous hidden states
                         \item $b_h := $ Hidden state biases
-                        \item $W_y := $ Weights connecting hidden state to output
+                        \item $W_y := $ Weights connecting hidden states to outputs
                         \item $b_y := $ Output biases
                         \item $\sigma_h := $ Hidden state activation function
                         \item $\sigma_y := $ Output activation function
@@ -448,11 +451,65 @@
                     \end{itemize}
 
                 \paragraph{}
-                    A visual representation of the network is given in Figure 7.
-                    
-                      
+                    A visual representation of the network is given in Figure 7. 
+                    Note this is a case of a many to one network, where a fixed history is used to predict the response at the end of said history. 
 
-                     
+                \begin{Figure}  
+                    \centering
+                    \includegraphics[width = \linewidth]{rnnStructure.png}
+                    \captionof{figure}{Basic RNN Topology}
+                    \label{fig:Basic RNN Topolgy}
+                \end{Figure}
+
+                \vspace{-5pt}
+
+                \paragraph{}
+                    Activation functions are used to map resulting values (hidden or output states) to a normalized range (usually (0,1) or (-1,1)).
+                    For hidden state activation, the choice of hyperbolic tangent (tanh) and exponential linear unit (elu) functions are tuned as hyperparameters, while sigmoid is used for the outputs:
+                    
+                    \begin{itemize}
+                        \item tanh $:= \sigma(z) = \frac{e^z - e^{-z}}{e^z + e^{-z}}$ 
+                        \item elu $:= \sigma(z) = \alpha(e^z - 1) \hspace{0.2cm} if \hspace{0.2cm} z \le 0, \hspace{0.2cm} z \hspace{0.2cm} else$
+                        \item sigmoid $:= \sigma(z) = \frac{1}{1 + e^{-z}}$
+                    \end{itemize} 
+
+                    While the simple RNN structure suffices for showing the mathematical details, it should be noted that added complexity is used for modeling in this work.
+                    This includes stacking multiple recurrent and dense layers before the output layer. 
+                    When this is the case, the outputs of the previous layer simply feed into the next one.
+                    Many such aspects of the model topology are treated as hyperparameters, as will be discussed later on.
+                
+                \vspace{-10pt}
+
+                \paragraph{}    
+                    For training a recurrent network, a first order iterative optimization algorithm known as mini-batch gradient descent is used with backpropogation. 
+                    First, define a cost function $C(y_i, \hat{y_i})$ relating model predictions to actual observed outcomes. 
+                    The cost function is designed to be large when the model missclassifies an observation and small when it correctly classifies. 
+                    In this analysis the binary cross entropy (also known as log-loss) cost function is used: $$C(y_i, \hat{y_i}) = -(y_i log(\hat{y_i}) + (1 - y_i)log(1 - \hat{y_i}))$$
+                    The value for $\hat{y_i}$ is between 0 and 1, interpreted as the predicted probability the observation belongs to a given class.
+                    As $C(y_i, \hat{y_i})$ is a function of model parameters (weights and biases), optimal parameters are found by minimizing the cost function.
+                    
+                \vspace{-10pt}
+
+                \paragraph{}
+                    Given a choice of cost function, the training algorithm begins by randomly sampling observations from the sample into mini-batches of size $n$.
+                    This is done for managing computational efficiency while ensuring convergence to a global minimum.  
+                    It is common practice to set $n = 32$ as is done in this work.
+                    For each mini-batch the weights and biases must first be set to initial values, this is done by randomly sampling from a uniform distribution.
+                    A forward pass is completed given these initial values, hence all hidden state and output activations are computed.
+                    Given model outputs, the gradient of the cost function with respect to model parameters across all samples in the mini-batch is attained. 
+                    A backward pass is then performed by updating the weights and biases according to the negative direction of the gradient and a pre-specified learning rate $\gamma$. 
+                    Parameters are updated as follows: $$\bar{\Theta}_{j+1} = \bar{\Theta}_j - \gamma (\nabla C(\bar{\Theta}_j))$$
+
+                \paragraph{}
+                    When the model completes a mini-batch, it is called an iteration. 
+                    The algorithm will then continue through all mini-batches to complete an epoch (i.e. it has seen all observations in the training sample).
+                    This process will repeat for a pre-specified number of epochs or until a stopping cirteria is met.
+                    Typically, this criteria is to stop when the cost function has not reduced over a given number of epochs. 
+                    
+
+                
+
+
 
       
 
