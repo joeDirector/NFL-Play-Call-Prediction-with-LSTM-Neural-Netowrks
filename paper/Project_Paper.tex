@@ -747,7 +747,47 @@
             \noindent samples needed to make a split, minimum samples required in a leaf, and max depth all prevent the model from learning the training data too closely.
             
             
-        
+        \subsection{Tuning Algorithm}
+            \paragraph{}
+                Model tuning is a procedure where different hyperparameter combinations are tested on validation data. 
+                There are a number of ways to conduct this process.
+                Given extensive search spaces (possible parameter combinations) and limited computational resources, a tuning algorithm with optimal efficiency is favored.
+                This analysis used a Hyperband search strategy. 
+                
+            \vspace{-10pt}
+
+            \paragraph{}
+                Hyperband is designed to allocate more resources (i.e. training iterations) to models that are promising in their early stages. 
+                The algorithm builds off the idea of successive halving.
+                In successive halving, a large number of randomly chosen combinations are ran for a few iterations. 
+                The top half performing combinations are chosen to continue training for more iterations and the rest are discared.
+                This is repeated until one model remains. 
+                Successive halving uses a finite budget $B$ (total training iterations) and fixes a number of combinations to consider $n$.
+                A problem with this approach is that it does not optimize the tradeoff between trying many combinations (large $n$) and trying fewer combinations but for more iterations (large $B/n$).
+                It is unknown at the time prior to training whether the model will converge slowly or quickly.
+                If $n$ is large, and the model converges slowly, then many good models will be discarded in the early stages.
+                Conversely, when $B/n$ is large, poor models will be trained for too many iterations and the budget will be wasted. 
+                
+            \vspace{-10pt}
+
+            \paragraph{}
+                Hyperband addresses this tradeoff by testing different numbers of combinations for a fixed budget. 
+                Define $r$, the minimum amount of iterations that can be allocated to a single combination, and $R$, the maximum amount of iterations that can be allocated to a single combination. 
+                The algorithm chooses various values of $n$ and $r$ based on $R$ (outer loop) and then runs successive halving on each fixed $n$ and $r$ (inner loop). 
+                A run of the inner loop is called a bracket. 
+                Each bracket uses a fixed budget $B$ but tests different tradeoffs between $n$ and $B/n$, as $n$ is varied.
+                By testing ways to balance resources and combinations, this algorithm is optimal for large search spaces and limited computing resources. 
+            
+            \vspace{-10pt}
+
+            \paragraph{}
+                To scale up the tuning process, free to use resources were provisioned from GCP.
+                Distributed training was performed across 2 GPUs on a single virtual machine. 
+                Tuning models in this way allows for multiple combinations to be tested simutaneously, greatly expediting the process.
+                The top 20 performing hyperparameter configurations for each model type considered were saved and passed on to final testing.   
+            
+
+
 
             
                 
