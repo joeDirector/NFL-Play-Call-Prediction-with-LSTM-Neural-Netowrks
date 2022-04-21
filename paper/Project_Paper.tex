@@ -47,7 +47,7 @@
 
     \begin{abstract}
         \centering\begin{minipage}{\dimexpr\paperwidth-12cm}
-        The prevelance of data analytics in professional sports has significantly increased over the last 20 years. 
+        The prevalance of data analytics in professional sports has significantly increased over the last 20 years. 
         First popularized in \emph{Moneyball: The Art of Winning an Unfair Game (2003)}, the use of advanced analytics is now mainstream in the four major U.S. sports and abroad. 
         In the National Football League (NFL), millions of dollars are invested into analytics departments and data is being used to drive decision making at every level of an organization's operation. 
         These departments can leverage statistical methods to learn the opposition's tendencies, providing a substantial competitive advantage. 
@@ -615,22 +615,153 @@
                         The use of dropout at various stages warrants further explanation. 
                         This is a regularization parameter. 
                         Regularization refers to measures in machine learning algorithms that counteract overfitting.
-                        Overfitting occurs when a model fits to closely to the training data and therefore doesn't generalize well to new observations.
+                        Overfitting occurs when a model fits too closely to the training data and therefore doesn't generalize well to new observations.
                         When dropout is added to a layer in a deep learning model, the fraction sets the amount of randomly selected inputs to turn off (set to 0). 
-                        This helps to avoid keying in to closely to the training inputs. 
+                        This helps to avoid keying in to closely to the training inputs and helps performance on test data. 
 
         \subsection{Baseline Models}
 
             \subsubsection*{Logistic Regression}
                 \paragraph{}
-                    \blindtext
-                
-    
-                         
+                    Logistic regression is a simple but powerful classification algorithm that is applied in a wide range of contexts.
+                    In this setting, each data point $(X_i,y_i)$, $i = 1,...,N$ is treated as an individual play call and feature vector (i.e. not a sequence).
+                    Arrange the feature vectors into an $N \times l$ design matrix $X$ and define a column parameter vector $\beta$ of length $l$.
+                    The parameters describe the relationship between each feature and the response.
+                    The probability that the response belongs to the positive class at each $i$ is then given by:
                     
+                    $$\hat{y} = \sigma_g(X\beta)$$
+
+                    Where $\sigma_g$ is the sigmoid activation function defined earlier. 
+                    Similarly to the training of sequential models, a cost function is defined $C(y_i, \hat{y_i})$.
+                    Again, the binary cross entropy is chosen as the cost function. 
+                    Gradient descent is applied in this context as well as once more the task is to find optimal parameters that minimize the cost function.
+                    The parameters are initialized at random.
+                    Then, at each training iteration, the parameters are updated by the gradient of the cost function given a specified learning rate $\gamma$:
+
+                    $$\beta_{j+1} = \beta_j - (\gamma \nabla C(\beta_j))$$
+
+                    This process is repeated for a specified number of iterations or until a similar stopping condition as in sequential models. 
+
+            \subsubsection*{Gradient Boosted Decision Trees}
+                \paragraph{}
+                    Gradient boosted decision trees (GBDT) are a popular class of ensemble models. 
+                    They are called an ensemble because they combine the predictions of many so called weak learners. 
+                    Weak learners in this context are decision tree classifiers. 
+                    Decision trees work by partitioning the feature space into subregions that seek to seperate the target classes.
+                    This is done by a series of binary decisions pertaining to certain values of the features. 
+                    For an in context example, the model might first consider splitting observations based on time remaining in the game. 
+                    All obervations falling under 250 seconds are sent down one branch of the tree and the rest another. 
+                    For observations under 250 seconds, another split might be considered based on score differential, whether it is positive or negative.
+                    This example is illustrated by the tree diagram in Figure 9.
+                    
+                    \begin{Figure}  
+                        \centering
+                        \includegraphics[width = \linewidth]{treeDiagram.png}
+                        \captionof{figure}{Simple Tree Diagram}
+                        \label{fig:Simple Tree}
+                    \end{Figure}
+
+                    
+                \paragraph{}
+                    The quality of a subregion is assessed by the binary cross entropy (as defined earlier) of observations that fall within its range. 
+                    Determining optimal parameters (where to make splits, what features to use for a split, and what threshold of said features) is done by a greedy optimization algorithm.
+                    It starts from a single root branch and adds branches in an iterative fashion, making locally optimal decisions at each step. 
+                    Predictions are made by majority voting in the leaf nodes and the probability of belonging to a class is given by its proportion of observations in the leaf. 
+                    
+                \vspace{-10pt}
+
+                \paragraph{}
+                    Decision trees are considered weak learners because they exhibit a lot of variance based on the training data used. 
+                    This means that using a different sample of training data will dramatically change the structure of the tree, causing the tendency to overfit.
+                    To overcome this defect, single decision tree models are rarely used, and instead multiple are combined in various ways called ensembles. 
+                    Gradient boosting is one such ensemble method that builds multiple decision trees in an iterative fashion, with each iteration correcting the mistakes of it predecessor.
+
+                \vspace{-10pt}
+
+                \paragraph{}
+                    As the name suggests, another form of the gradient descent algorithm is used for optimization.
+                    Letting the data be represented by $(X_i,y_i)$, $i=1,..,N$, let $\gamma$ denoted the log(odds) of the target variable i.e. $log(\frac{passes}{runs})$.
+                    Define a cost function as: $$C(y_i, \gamma) = -y_i\gamma + log(1+e^\gamma)$$
+                    The process begins by determining an initial model defined by a single constant leaf node for all $N$ observations. 
+                    This is done by minimizing $\gamma$ over the sum of the cost function across $N$: $$M_0 = argmin_\gamma \sum_{i=1}^N C(y_i, \gamma)$$ 
+                    Where $M_0$ represents the initial model. 
+                    Given this choice of loss function, the value for $\gamma$ that minimizes this sum is simply the log(odds) based on observed values in the data.
+                    The model iterates by fitting decision trees to residuals between observed values and the previous probability predictions.
+                    For $j=1,...,J$:
+
+                    \begin{enumerate}
+                        \item Find the residual $r_{ij} = -\frac{\partial C(y_i,M_{j-1}(X_i))}{\partial M_{j-1}}$
+                        \item Fit a decision tree using the features and the residuals $(X_i,r_{ij})$
+                        \item Calculate output values in the new decision tree $\gamma_j = argmin_\gamma \sum_{i=1}^N C(y_i, M_{j-1}(X_i) + \gamma h_j(X_i))$ 
+                        \item Update the model $M_j = M_{j-1} + \gamma_j h_j$
+                    \end{enumerate}
+
+                    The final model ouput will be $M_J$.
+                    Step 4 can be seen to closely resemble the prior results of gradient descent where $\gamma_j$ represents the learning rate.
+                    
+                \vspace{-10pt}
+
+                \paragraph{}
+                    As was the case with sequential models, there are a number of hyperparameters to tune in both logistic regression and gradient boosted decision trees.
+                    A list of hyperparameters for the baseline models is given in Table 4. 
+                    Again, many of these are related to regularization. 
+                    In logistic regression, this comes in the form of an elastic net. 
+                    An elastic net is a way to penalize the cost function by mixing $L_1$ and $L_2$ norms. 
+                    The ratio controls how much $L_1$ penalization to use relative to $L_2$. 
+                    Penalization constrains the parameters during optimization and forces the algorithm to favor more simplistic models, which helps if the model overfits. 
+                
+                \vspace{-10pt}
+                
+                \paragraph{}
+                    For GBDT, there are a number of regularization parameters. 
+                    A random subsample (with replacement) of the original data is used during the bulding of each tree.
+                    This is akin to bootstrapping and greatly decreases the variance of predictions given a change in training data. 
+                    Similarly, only a random subsample of features are considered at each split (the square root of the total features).   
+                    Aspects of the tree structure such as the minimum
+                        
+            \end{multicols*}
+            \begin{table*}[ht]
+            \caption{Baseline Model Hyperparameters} \label{tab:Baseline Model Hyperparameters} 
+            \centering
+            \begin{tabular}{|| m{3cm} | m{8.75cm}| m{2cm} | m{1.25cm} |}
+                \hline
+                \textbf{Parameter} & \textbf{Description} & \textbf{Range} & \textbf{Model} \\
+                \hline\hline
+                Estimators & (int) Number of iterations  & [100,500] & GBDT \\
+                \hline
+                Subsample & (float) Fraction of samples to consider for each tree & [0.5,1.0] & GBDT \\
+                \hline
+                Min samples split & (int) Min number of samples needed to split a node & [2,15] & GBDT \\
+                \hline
+                Min samples leaf & (int) Min number of samples needed in each leaf & [1, 10] & GBDT \\
+                \hline
+                Max Depth & (int) Max number of consecutive branches & [1,5] & GBDT \\
+                \hline
+                $L_1$ ratio & (float) Proportion of $L_1$ penalty to $L_2$ & [0,1] & LOG \\
+                \hline
+            \end{tabular}
+            \end{table*}
+            \begin{multicols*}{2}
+
             
+            \noindent samples needed to make a split, minimum samples required in a leaf, and max depth all prevent the model from learning the training data too closely.
+            
+            
+        
+
+            
+                
+                
 
 
+
+
+                        
+
+
+
+
+            
 
 
 \end{multicols*}
