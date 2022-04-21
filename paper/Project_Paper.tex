@@ -778,25 +778,182 @@
                 Each bracket uses a fixed budget $B$ but tests different tradeoffs between $n$ and $B/n$, as $n$ is varied.
                 By testing ways to balance resources and combinations, this algorithm is optimal for large search spaces and limited computing resources. 
             
+            \vspace{-15pt}
+            
+            \paragraph{}
+                In order to scale up the tuning process, free to use computing resources were provisioned from GCP.
+                A distributed search strategy allows multiple model configurations to be ran in parallel, significantly expediting the algorithm.  
+                For considering the top 20 models to pass on to final testing, the cost function is evaluated on the validation set, and the models with the lowest validation cost are chosen. 
+                The final metrics reported (on the test set) are the binary accuracy and ROC-AUC (area under the receiver operating characteristic curve). 
+                Binary accuracy returns the frequency at which the total observations in the test set are correctly classified. 
+                It is a good metric in this context because classifying the negative class (runs) is just as important as classifying the positive class (passes) and the data is reasonably well balanced.
+                The ROC curve is a graph showing the performance of a model at various thresholds. 
+                It plots the relationship between the true positive (TPR) and false positive rates (FPR).
+                The AUC takes the area under this curve, providing an aggregate measure of performance across all classification thresholds.
+                An AUC value close to 1 means the model has a high degree of seperability. 
+                
+    \end{multicols*}
+    \begin{figure}[ht]
+        \includegraphics[width = \linewidth]{cvResults.png}
+        \caption{Cross Validation Results}
+        \label{fig:CV Results}
+    \end{figure}
+    \begin{multicols*}{2}           
+    
+
+                
+    \section{Results}
+
+        \subsection{Cross Validation Metrics}
+
+            \paragraph{}
+                The scores for accuracy and ROC-AUC over the various cross validation folds are given in Figure 10.
+                Note that the models are re-trained using all prior data before the final test fold.
+                Looking at the test metrics, the sequential models outperform the baselines.
+                The best LSTM (accuracy 0.7727 ROC-AUC 0.8434) slightly outperforms the best RNN (accuracy 0.7586 ROC-AUC 0.8369) model.  
+                This is a considerable increase over the best performing GBDT (accuracy 0.7323 ROC-AUC 0.7101) and logistic regression (accuracy 0.7111 ROC-AUC 0.6906) models. 
+                The sequential approach gives around a 3-6\% accuracy boost in predicting play calls and a 12-15\% boost in the seperability of runs and passes.
+                
             \vspace{-10pt}
 
             \paragraph{}
-                To scale up the tuning process, free to use resources were provisioned from GCP.
-                Distributed training was performed across 2 GPUs on a single virtual machine. 
-                Tuning models in this way allows for multiple combinations to be tested simutaneously, greatly expediting the process.
-                The top 20 performing hyperparameter configurations for each model type considered were saved and passed on to final testing.   
-            
+                Importantly, for the sequential models, the metrics stay relatively steady over the training, validation, and test folds.
+                This is solid indication that these kinds of models will generalize well to data outside what is considered in this analysis (i.e. different NFL seasons).  
+                There is an expected drop off in performance going from training to testing as the model hasn't seen the test data. 
+                A large discrepancy between training and testing metrics is indication of the model overfitting.
+                This is apparent for GBDT, where a considerable performance dropoff occurrs between training and validation/testing.
+                Even though its final test metric is slightly worse, the logistic regression model may be preffered over GBDT as its metrics remain steady over the folds. 
+                 
+        
+        \subsection{Selected Hyperparameters}
 
-
-
-            
+            \paragraph{}
+                A list of chosen hyperparameters for the best LSTM model is given in Table 5. 
+                The best performing model uses 11 previous play calls as a sequence. 
+                Note this model is relatively simple with only one sequential and dense layer each.
+                The amount of recurrent units (54) falls in an intermediate value, finding a good balance betweeen overly-simplistic and overly-complex. 
+                The dropout rates fall near the middle of their specified ranges as well, balancing the right amount of training information to lose in order to generalize the predictions.
                 
+        
+        \begin{center}
+        \begin{tabular}{|| m{3cm} | m{3cm}||}
+            \hline
+            \textbf{Parameter} & \textbf{Value}  \\
+            \hline\hline
+            Sequence Length & 11  \\
+            \hline
+            Sequential Layers & 1 \\
+            \hline
+            Units & 54 \\
+            \hline
+            Dense Layers & 1 \\
+            \hline
+            Dense Dropout & 0.205 \\
+            \hline
+            LSTM Dropout & 0.159 \\
+            \hline
+            Learning Rate & 0.0067\\
+            \hline 
+        \end{tabular}
+        \captionof{table}{LSTM Hyperparameters}
+        \end{center}
+
+            \paragraph{}
+                A similar table for the best selected RNN model is given in Table 6.
+                Suprisingly, the RNN model considers a longer play sequence (12) than LSTM. 
+                A simpler model is chosen for this type as well (only one sequential and dense layer each).
+                The lower value of recurrent units (27) shows simplicity was favored even more for RNNs.   
+                For the RNN and dense dropout, the values selected are closer to the bottom of the specified range. 
+                This indicates the model needs all the information from the inputs in order to perform well, which is not suprising as RNNs have a more simple structure.
+                The learning rates for both models are similar and relatively high, indicating that optimal models are able to converge quickly.   
+        \begin{center}
+            \begin{tabular}{|| m{3cm} | m{3cm}||}
+                \hline
+                \textbf{Parameter} & \textbf{Value}  \\
+                \hline\hline
+                Sequence Length & 12  \\
+                \hline
+                Sequential Layers & 1 \\
+                \hline
+                Units & 27 \\
+                \hline
+                Dense Layers & 1 \\
+                \hline
+                Dense Dropout & 0.104 \\
+                \hline
+                RNN Dropout & 0.135 \\
+                \hline
+                Rec Dropout & 0.268 \\
+                \hline
+                Learning Rate & 0.0058\\
+                \hline
                 
+            \end{tabular}
+            \captionof{table}{RNN Hyperparameters}
+            \end{center}
+
+            \paragraph{}
+                Again, the chosen hyperparameters for the best GBDT model is show in Table 7.
+                The number of estimators used was toward the larger end of the range. 
+                This means the algorithm took a relatively long time to converge on a good solution.
+                The regularization parameters are moderate to high for all of minimum samples per leaf, minimum sample to split, and max depth (lower values of max depth mean higher regularization).
+                So, even with such high levels of regularization, the GBDT model still showed the highest degree of overfitting.  
+                
+        \begin{center}
+            \begin{tabular}{|| m{3.25cm} | m{3cm}||}
+                \hline
+                \textbf{Parameter} & \textbf{Value}  \\
+                \hline\hline
+                Estimators & 408  \\
+                \hline
+                Subsample & 0.89 \\
+                \hline
+                Min Samples Split & 9 \\
+                \hline
+                Min Samples Leaf & 10 \\
+                \hline
+                Max Depth & 2 \\
+                \hline
+                
+            \end{tabular}
+            \captionof{table}{GBDT Hyperparameters}
+            \end{center}
 
 
+            \paragraph{}
+                Finally, the value chose for $L_1$ ratio in the best performing logistic regression model was 0.6103. 
+                A balance between $L_1$ and $L_2$ regularization was generally favored, with a slight preference for $L_1$. 
 
+                    
+        \subsection{Model Application - Red Zone}
+            \paragraph{}
+                Using all play call contexts is practical for building and evaluating models. 
+                However, there are many situations where the play call is obvious, and some play calls are more consequential than others.
+                To truly get a sense for how useful the best selected model is, it needs to be tested in critical, game deciding situations. 
+                To thid end, this section aims to show performance of the best model in red zone situations. 
+            
+            \vspace{-10pt}
 
-                        
+            \paragraph{}
+                A play is considered to be in the red zone when the offensive team is within 20 yards or less of the opposition's goal line. 
+                Converting red zone plays into touchdowns is critical for the offensive team, likewise, it is critical for the defensive team to force the offensive team into a field goal attempt.
+                Also, it is not apparently obvious whether a red zone play will be a pass or a run. 
+                In the entire data set, 54\% of red zone plays were passes while 46\% of red zone plays were runs. 
+                So, red zone plays present a particularly useful case for the model because 1) knowing the outcome provides an especially helpful competitive advantage and 2) it is hard to tell what the outcome will be.
+                
+            \vspace{-10pt}
+
+            \paragraph{}
+                Due to its slight increase in performance over the best RNN model, the best LSTM from the previous section was chosen for this application.
+                The model was trained on all observations occurring in weeks 1 through 12 of the NFL season.
+                Then, of the original test split, observations were filtered to retain only play calls happening in the red zone. 
+                This leaves 1416 red zone play calls occurring during weeks 13-17 of the NFL season. 
+            
+            \vspace{-10pt}
+
+            \paragraph{}
+                The model returns a 0.8166 accuracy and a 0.9074 ROC-AUC score. 
+                Given the sample wide metrics on the test set, this is an encouraging result as the model performs well in the situations that matter most. 
 
 
 

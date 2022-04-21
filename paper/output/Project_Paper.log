@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.4.13)  21 APR 2022 00:01
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.4.13)  21 APR 2022 17:13
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -356,20 +356,26 @@ File: /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Ne
 <use /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/treeDiagram.png>
 Package pdftex.def Info: /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/treeDiagram.png  used on input line 659.
 (pdftex.def)             Requested size: 236.01563pt x 152.99382pt.
- [10] [11 </Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/treeDiagram.png>] [12] (output/Project_Paper.aux) ) 
+ [10] [11 </Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/treeDiagram.png>] [12]
+</Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/cvResults.png, id=83, 1159.167pt x 359.16pt>
+File: /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/cvResults.png Graphic file (type png)
+<use /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/cvResults.png>
+Package pdftex.def Info: /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/cvResults.png  used on input line 797.
+(pdftex.def)             Requested size: 500.484pt x 155.0715pt.
+ [13 </Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/cvResults.png>] [14] (output/Project_Paper.aux) ) 
 Here is how much of TeX's memory you used:
- 4355 strings out of 478268
- 81676 string characters out of 5846347
- 387551 words of memory out of 5000000
- 22534 multiletter control sequences out of 15000+600000
+ 4364 strings out of 478268
+ 82433 string characters out of 5846347
+ 387561 words of memory out of 5000000
+ 22542 multiletter control sequences out of 15000+600000
  475593 words of font info for 49 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,12n,63p,375b,375s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb>
-Output written on output/Project_Paper.pdf (14 pages, 1183613 bytes).
+Output written on output/Project_Paper.pdf (16 pages, 1494612 bytes).
 PDF statistics:
- 155 PDF objects out of 1000 (max. 8388607)
- 86 compressed objects within 1 object stream
+ 163 PDF objects out of 1000 (max. 8388607)
+ 90 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 46 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 51 words of extra memory for PDF output out of 10000 (max. 10000000)
 

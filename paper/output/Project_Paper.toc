@@ -57,3 +57,17 @@
 \contentsline {paragraph}{}{12}{}%
 \contentsline {paragraph}{}{12}{}%
 \contentsline {paragraph}{}{12}{}%
+\contentsline {section}{\numberline {3}Results}{13}{}%
+\contentsline {subsection}{\numberline {3.1}Cross Validation Metrics}{13}{}%
+\contentsline {paragraph}{}{13}{}%
+\contentsline {paragraph}{}{13}{}%
+\contentsline {subsection}{\numberline {3.2}Selected Hyperparameters}{13}{}%
+\contentsline {paragraph}{}{13}{}%
+\contentsline {paragraph}{}{13}{}%
+\contentsline {paragraph}{}{14}{}%
+\contentsline {paragraph}{}{14}{}%
+\contentsline {subsection}{\numberline {3.3}Model Application - Red Zone}{14}{}%
+\contentsline {paragraph}{}{14}{}%
+\contentsline {paragraph}{}{14}{}%
+\contentsline {paragraph}{}{14}{}%
+\contentsline {paragraph}{}{14}{}%
