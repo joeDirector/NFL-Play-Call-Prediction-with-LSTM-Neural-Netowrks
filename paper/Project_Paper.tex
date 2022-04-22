@@ -952,13 +952,48 @@
             \vspace{-10pt}
 
             \paragraph{}
-                The model returns a 0.8166 accuracy and a 0.9074 ROC-AUC score. 
+                The model returns a 0.8166 accuracy and a 0.9074 ROC-AUC score for play calls in the red zone. 
                 Given the sample wide metrics on the test set, this is an encouraging result as the model performs well in the situations that matter most. 
+                Even more important situations are the later downs of red zone plays. 
+                Whether the defensive team is successful on third or fourth down of a red zone play will often mean the difference between winning and losing.
+                Figure 11 shows prediction accuracy and ROC-AUC score of red zone plays by down. 
+                The model performs very well in the later down situations and reaches nearly 88\% accuracy on third downs. 
+                Having this level of confidence in the opposition's play call in a critical third and goal situation would present a massive advantage for the defensive team. 
+                As a caveat, it should be noted these metrics are slightly buoyed by the relatively small amount of observations in each set (568 1st, 464 2nd, 334 3rd, 50 4th).   
 
 
+            \end{multicols*}
+            \begin{figure}[ht]
+                \includegraphics[width = \linewidth]{redZoneByDown.png}
+                \caption{Prediction Metrics of Red Zone Plays by Down}
+                \label{fig:Prediction Metrics of Red Zone Plays by Down}
+            \end{figure}
+            \begin{multicols*}{2} 
 
-
+    \section{Discussion}
+        \paragraph{}
+            As is evident by the comparative performance of models assessed in this analysis, choosing a fancier model strategy will only slightly improve results if the data is left in tabular form.  
+            The performance boost from a logistic regression classifier to a gradient boosted decision tree is negligible. 
+            As shown, machine learning tasks are not solved by simply throwing a more complex model at the problem. 
+            Real breakthroughs come from thinking critically about the real world processes that generated the data of interest. 
+            Any football fan will know that a play call is not made in an individual vacuum. 
+            Hence, it is not just the current situation that influences this decision, but rather the combination of these factors and the sequence of outcomes happening beforehand.   
             
+        \vspace{-10pt}
+        \paragraph{}
+            With this in mind, it was not the desire to use deep learning that motivated the choice of modeling strategy in this analysis, but rather a reassessment of how to structure the data. 
+            Given that the idea was to structure the data as a sequential pattern, the choice of models to use simply followed from what has been proven to work with data in this form. 
+            The results prove this was an effective strategy and confirm the presence of a temporal component in NFL play calls.
+            
+        \vspace{-10pt}
+        \paragraph{}
+            An interesting takeaway is the optimal number of plays to consider as a sequence. 
+            This aspect was able to be considered as a hyperparameter of the sequential models. 
+            Going into the analysis it was anticipated this value would only be up to the 4 or 5 most recent plays.
+            To the contrary, many of the best performing sequential models happened to consider play call histories of over 10 plays. 
+            This challanged the preconceived notion of what a play call sequence would look like. 
+            10 plays is around the average amount an offensive team will run on a sustained scoring drive. 
+            It makes sense that the model would need the entire history of a drive to predict accurately, it requires information at every stage in the drive to predict accurately. 
 
 
 \end{multicols*}
