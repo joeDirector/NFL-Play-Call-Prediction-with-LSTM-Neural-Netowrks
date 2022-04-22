@@ -194,16 +194,16 @@
                 Around 32,000 individual play instances occurred over the course of this season.  
                 A list of features chosen for modeling is included in Table 1. 
                 Some of these features are given directly by \texttt{nflfastR}, others are acquired through feature engineering.
-                The data given is two dimensional $(n,m)$: $n$ samples (individual plays) and $m$ features. 
+                The data given is two dimensional $(N,m)$: $N$ samples (individual plays) and $m$ features. 
                 These dimensions are fed into baseline models.
-                For sequential models, three dimensional data is required $(n,k,m)$: $n$ samples, each sample consisting of $k$ consecutive plays, and $m$ features for each play in the sequence. 
+                For sequential models, three dimensional data is required $(N,k,m)$: $N$ samples, each sample consisting of $k$ consecutive plays, and $m$ features for each play in the sequence. 
                 This requires additional preprocessing.
 
     \section{Methodology}
 
         \subsection{Aims}
             \paragraph{}
-                Our analysis aims to implement industry standard data science practices for building and testing models.
+                The analysis aims to implement industry standard data science practices for building and testing models.
                 This consists of building a scalable data pipeline for preprocessing, hyperparameter tuning, and model selection.
                 To this end, cloud computing resources were provisioned from Google Cloud Platform (GCP). 
                 This platform allowed for distributed model training on multiple graphics preprocessing units (GPUs); a critical resource given the computational demands of model tuning.  
@@ -415,7 +415,7 @@
                     For the models used in this work, let the pair $(X_i, y_i)$ for $i = 1,2,...N$ represent a training observation where:
                     
                     \begin{itemize}
-                        \item $X_i := X_{t-k}^l, X_{t-k+1}^l, ... , X_{t}^l$ i.e. a sequence (size $k$) of design vectors (dimension $l$, the number of features)  
+                        \item $X_i := X_{t-k}^m, X_{t-k+1}^m, ... , X_{t}^m$ i.e. a sequence (size $k$) of design vectors (dimension $m$, the number of features)  
                         \item $y_i := y_{t}$ i.e. the binary response at time $t$ 
                     \end{itemize}
 
@@ -553,7 +553,7 @@
 
                     \paragraph{}
                         The structure of an LSTM cell is shown in Figure 8.
-                        The cell state $c_t$ communicates the long term memory of the network and are updated at various points within the cell.  
+                        The cell state $c_t$ communicates the long term memory of the network and is updated at various points within the cell.  
                         $f_t$, the forget gate, is used for deciding what to discard.
                         It combines information from the previous output and the current input and uses sigmoid activation to compress this into a value between 0 and 1.
                         This is combined with $c_{t-1}$, the previous cell state, by pointwise multiplication.
@@ -629,7 +629,7 @@
                 \paragraph{}
                     Logistic regression is a simple but powerful classification algorithm that is applied in a wide range of contexts \cite{Hastie01}.
                     In this setting, each data point $(X_i,y_i)$, $i = 1,...,N$ is treated as an individual play call and feature vector (i.e. not a sequence).
-                    Arrange the feature vectors into an $N \times l$ design matrix $X$ and define a column parameter vector $\beta$ of length $l$.
+                    Arrange the feature vectors into an $N \times m$ design matrix $X$ and define a column parameter vector $\beta$ of length $m$.
                     The parameters describe the relationship between each feature and the response.
                     The probability that the response belongs to the positive class at each $i$ is then given by:
                     
@@ -835,7 +835,7 @@
                 A list of chosen hyperparameters for the best LSTM model is given in Table 5. 
                 The best performing model uses 11 previous play calls as a sequence. 
                 Note this model is relatively simple with only one sequential and dense layer each.
-                The amount of recurrent units (54) falls in an intermediate value, finding a good balance betweeen overly-simplistic and overly-complex. 
+                The amount of recurrent units (54) falls in an intermediate value, finding a good balance between overly-simplistic and overly-complex. 
                 The dropout rates fall near the middle of their specified ranges as well, balancing the right amount of training information to lose in order to generalize the predictions.
                 
         
@@ -925,7 +925,7 @@
 
 
             \paragraph{}
-                Finally, the value chose for $L_1$ ratio in the best performing logistic regression model was 0.6103. 
+                Finally, the value chosen for $L_1$ ratio in the best performing logistic regression model was 0.6103. 
                 A balance between $L_1$ and $L_2$ regularization was generally favored, with a slight preference for $L_1$. 
 
                     
@@ -934,7 +934,7 @@
                 Using all play call contexts is practical for building and evaluating models. 
                 However, there are many situations where the play call is obvious, and some play calls are more consequential than others.
                 To truly get a sense for how useful the best selected model is, it needs to be tested in critical, game deciding situations. 
-                To thid end, this section aims to show performance of the best model in red zone situations. 
+                To this end, this section aims to show performance of the best model in red zone situations. 
             
             \vspace{-10pt}
 
@@ -975,63 +975,68 @@
             \begin{multicols*}{2} 
 
     \section{Discussion}
-        \paragraph{}
-            As is evident by the comparative performance of models assessed in this analysis, choosing a fancier model strategy will only slightly improve results if the data is left in tabular form.  
-            The performance boost from a logistic regression classifier to a gradient boosted decision tree is negligible. 
-            As shown, machine learning tasks are not solved by simply throwing a more complex model at the problem. 
-            Real breakthroughs come from thinking critically about the real world processes that generated the data of interest. 
-            Any football fan will know that a play call is not made in an individual vacuum. 
-            Hence, it is not just the current situation that influences this decision, but rather the combination of these factors and the sequence of outcomes happening beforehand.   
-            
-        \vspace{-10pt}
-        \paragraph{}
-            With this in mind, it was not the desire to use deep learning that motivated the choice of modeling strategy in this analysis, but rather a reassessment of how to structure the data. 
-            Given that the idea was to structure the data as a sequential pattern, the choice of models to use simply followed from what has been proven to work with data in this form. 
-            The results prove this was an effective strategy and confirm the presence of a temporal component in NFL play calls.
-            
-        \vspace{-10pt}
-        \paragraph{}
-            An interesting takeaway is the optimal number of plays to consider as a sequence. 
-            This aspect was able to be considered as a hyperparameter of the sequential models. 
-            Going into the analysis it was anticipated this value would only be up to the 4 or 5 most recent plays.
-            To the contrary, many of the best performing sequential models happened to consider play call histories of over 10 plays. 
-            This challanged the preconceived notion of what a play call sequence would look like. 
-            10 plays is around the average amount an offensive team will run on a sustained scoring drive. 
-            It makes sense that the model would need the entire history of a drive to predict accurately, as it would be able to store information at every stage. 
+
+        \subsection{Takeaways}
+
+            \paragraph{}
+                As is evident by the comparative performance of models assessed in this analysis, choosing a fancier model strategy will only slightly improve results if the data is left in tabular form.  
+                The performance boost from a logistic regression classifier to a gradient boosted decision tree is negligible. 
+                As shown, machine learning tasks are not solved by simply throwing a more complex model at the problem. 
+                Real breakthroughs come from thinking critically about the real world processes that generated the data of interest. 
+                Any football fan will know that a play call is not made in an individual vacuum. 
+                Hence, it is not just the current situation that influences this decision, but rather the combination of these factors and the sequence of outcomes happening beforehand.   
+                
+            \vspace{-10pt}
+            \paragraph{}
+                With this in mind, it was not the desire to use deep learning that motivated the choice of modeling strategy in this analysis, but rather a reassessment of how to structure the data. 
+                Given that the idea was to structure the data as a sequential pattern, the choice of models to use simply followed from what has been proven to work with data in this form. 
+                The results prove this was an effective strategy and confirm the presence of a temporal component in NFL play calls.
+                
+            \vspace{-10pt}
+            \paragraph{}
+                An interesting takeaway is the optimal number of plays to consider as a sequence. 
+                This aspect was able to be considered as a hyperparameter of the sequential models. 
+                Going into the analysis it was anticipated this value would only be up to the 4 or 5 most recent plays.
+                To the contrary, many of the best performing sequential models happened to consider play call histories of over 10 plays. 
+                This challenged the preconceived notion of what a play call sequence would look like. 
+                10 plays is around the average amount an offensive team will run on a sustained scoring drive. 
+                It makes sense that the model would need the entire history of a drive to predict accurately, as it would be able to store information at every stage. 
 
 
-        \vspace{-10pt}
-        \paragraph{}
-            Overall, simpler models were favored in this analysis.
-            While there is enough of a performance boost using sequential models to show there is a temporal pattern to the data, this relationship isn't complex enough to warrant the use of multiple hidden recurrent layers.
-            This is an encouraging sign as simple models are easier to construct and take less computational resources to train.
-        \vspace{-10pt}
-        \paragraph{}
-            A general challenge with modeling this data is that it is designed to be deceptive. 
-            The offensive team survives off of tricking the defense and is fully aware of its own tendencies. 
-            It knows what it is expected to do at any given situation and will often do the exact opposite in order to maintain an element of surprise. 
-            Due to this nature, it seems there will always be a less than desirable upper limit on model performance no matter how much quality data is fed into an algorithm.
+            \vspace{-10pt}
+            \paragraph{}
+                Overall, simpler models were favored in this analysis.
+                While there is enough of a performance boost using sequential models to show there is a temporal pattern to the data, this relationship isn't complex enough to warrant the use of multiple hidden recurrent layers.
+                This is an encouraging sign as simple models are easier to construct and take less computational resources to train.
+        
 
-        \vspace{-10pt}
-        \paragraph{}
-            Another significant limitation to the results of this analysis is the lack of quality data.
-            Two massively critical aspects to determining play calls are not included in the feature space.
-            These factors are the specific formation that offense lines up in and the personnel packages on the field for the current play. 
-            Due to not knowing these details, any model's performance is greatly reduced because there is valuable information influencing the response that it can't account for. 
-            In particular, knowing the formation and personnel would help the model distinguish classes in situations where the play call isn't obvious. 
-            An example would be first and long situations where the frequency of passes and runs is nearly even. 
-            Most of the time this is case where the in game context gives little to no signal. 
-            Knowing whether the offense lines up in bunch formation, with two tight ends and a full back, versus the spread with five wide receivers would allow the classes to be much easier to seperate.
+        \subsection{Limitations}
+            \paragraph{}
+                A general challenge with modeling this data is that it is designed to be deceptive. 
+                The offensive team survives off of tricking the defense and is fully aware of its own tendencies. 
+                It knows what it is expected to do at any given situation and will often do the exact opposite in order to maintain an element of surprise. 
+                Due to this nature, it seems there will always be a less than desirable upper limit on model performance no matter how much quality data is fed into an algorithm.
 
-        \vspace{-10pt}
-        \paragraph{}
-            Further improving the data is the clearest path forward to build upon these results. 
-            While not freely available, it does appear that some paid services (designed for Fantasy Football modeling) allow access to personnel/formation data.
-            Exploring these options and attempting a similar modeling strategy as in this analysis would be worthwhile.
-            In addition, simply adding more data from multiple NFL seasons could somewhat improve results. 
-            This analysis focused on one season alone in order to use the teams as features. 
-            Since teams can even change over the course of a single season (injuries, trades, etc.), this assumption might be invalid anyway.
-            A suggestion would be to not consider offensive or defensive team as a feature in the model and use many years of data for training/testing.  
+            \vspace{-10pt}
+            \paragraph{}
+                Another significant limitation to the results of this analysis is the lack of quality data.
+                Two massively critical aspects to determining play calls are not included in the feature space.
+                These factors are the specific formation that offense lines up in and the personnel packages on the field for the current play. 
+                Due to not knowing these details, any model's performance is greatly reduced because there is valuable information influencing the response that it can't account for. 
+                In particular, knowing the formation and personnel would help the model distinguish classes in situations where the play call isn't obvious. 
+                An example would be first and long situations where the frequency of passes and runs is nearly even. 
+                Most of the time this is a case where the in game context gives little to no signal. 
+                Knowing whether the offense lines up in bunch formation, with two tight ends and a full back, versus the spread with five wide receivers would allow the classes to be much easier to seperate.
+
+            \vspace{-10pt}
+            \paragraph{}
+                Further improving the data is the clearest path forward to build upon these results. 
+                While not freely available, it does appear that some paid services (designed for Fantasy Football modeling) allow access to personnel/formation data.
+                Exploring these options and attempting a similar modeling strategy as in this analysis would be worthwhile.
+                In addition, simply adding more data from multiple NFL seasons could somewhat improve results. 
+                This analysis focused on one season alone in order to use the teams as features. 
+                Since teams can even change over the course of a single season (injuries, trades, etc.), the assumption that they remain constant may be invalid.
+                A suggestion would be to not consider offensive or defensive team as a feature in the model and use many years of data for training/testing.  
 
 
 \newpage

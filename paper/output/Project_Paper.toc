@@ -72,10 +72,12 @@
 \contentsline {paragraph}{}{14}{}%
 \contentsline {paragraph}{}{14}{}%
 \contentsline {section}{\numberline {4}Discussion}{15}{}%
+\contentsline {subsection}{\numberline {4.1}Takeaways}{15}{}%
 \contentsline {paragraph}{}{15}{}%
 \contentsline {paragraph}{}{15}{}%
 \contentsline {paragraph}{}{15}{}%
 \contentsline {paragraph}{}{15}{}%
+\contentsline {subsection}{\numberline {4.2}Limitations}{16}{}%
 \contentsline {paragraph}{}{16}{}%
 \contentsline {paragraph}{}{16}{}%
 \contentsline {paragraph}{}{16}{}%
