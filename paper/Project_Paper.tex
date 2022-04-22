@@ -65,6 +65,10 @@
 
     \tableofcontents
     \newpage
+    \listoffigures
+    \newpage
+    \listoftables
+    \newpage
 
     \pagenumbering{arabic}
 
@@ -614,7 +618,7 @@
                     \paragraph{}
                         The use of dropout at various stages warrants further explanation. 
                         This is a regularization parameter. 
-                        Regularization refers to measures in machine learning algorithms that counteract overfitting.
+                        Regularization refers to measures in machine learning algorithms that counteract overfitting \cite{Hastie01}.
                         Overfitting occurs when a model fits too closely to the training data and therefore doesn't generalize well to new observations.
                         When dropout is added to a layer in a deep learning model, the fraction sets the amount of randomly selected inputs to turn off (set to 0). 
                         This helps to avoid keying in to closely to the training inputs and helps performance on test data. 
@@ -623,7 +627,7 @@
 
             \subsubsection*{Logistic Regression}
                 \paragraph{}
-                    Logistic regression is a simple but powerful classification algorithm that is applied in a wide range of contexts.
+                    Logistic regression is a simple but powerful classification algorithm that is applied in a wide range of contexts \cite{Hastie01}.
                     In this setting, each data point $(X_i,y_i)$, $i = 1,...,N$ is treated as an individual play call and feature vector (i.e. not a sequence).
                     Arrange the feature vectors into an $N \times l$ design matrix $X$ and define a column parameter vector $\beta$ of length $l$.
                     The parameters describe the relationship between each feature and the response.
@@ -644,7 +648,7 @@
 
             \subsubsection*{Gradient Boosted Decision Trees}
                 \paragraph{}
-                    Gradient boosted decision trees (GBDT) are a popular class of ensemble models. 
+                    Gradient boosted decision trees (GBDT) are a popular class of ensemble models \cite{Hastie01}. 
                     They are called an ensemble because they combine the predictions of many so called weak learners. 
                     Weak learners in this context are decision tree classifiers. 
                     Decision trees work by partitioning the feature space into subregions that seek to seperate the target classes.
@@ -758,7 +762,7 @@
 
             \paragraph{}
                 Hyperband is designed to allocate more resources (i.e. training iterations) to models that are promising in their early stages. 
-                The algorithm builds off the idea of successive halving.
+                The algorithm builds off the idea of successive halving \cite{Jameison17}.
                 In successive halving, a large number of randomly chosen combinations are ran for a few iterations. 
                 The top half performing combinations are chosen to continue training for more iterations and the rest are discared.
                 This is repeated until one model remains. 
@@ -1070,8 +1074,13 @@
     Mozer, M. C. (1995). \emph{A Focused Backpropagation Algorithm for Temporal Pattern Recognition}. In Chauvin, Y.; Rumelhart, D. (eds.). Backpropagation: Theory, architectures, and applications. ResearchGate. Hillsdale, NJ: Lawrence Erlbaum Associates.
 
     \bibitem{Olah15}
-    Olah, C. (2015). Understanding LSTM Networks. Retrieved April 21, 2022, from https://colah.github.io/posts/2015-08-Understanding-LSTMs/. 
+    Olah, C. (2015). \emph{Understanding LSTM Networks}. Retrieved April 21, 2022, from https://colah.github.io/posts/2015-08-Understanding-LSTMs//.
+    
+    \bibitem{Hastie01}
+    Hastie, T., Hastie, T., Tibshirani, R., Friedman, J. H. (2001). \emph{The elements of statistical learning: Data mining, inference, and prediction}. New York: Springer.
+
+    \bibitem{Jameison17}
+    Li, L., Jamieson, K., DeSalvo, G., Rostamizadeh, A., Talwalkar, A. (2017). \emph{Hyperband: A novel bandit-based approach to hyperparameter optimization}. The Journal of Machine Learning Research, 18(1), 6765-6816.
     
 \end{thebibliography}
-
 \end{document}

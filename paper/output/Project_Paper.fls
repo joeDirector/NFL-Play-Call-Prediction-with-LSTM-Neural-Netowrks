@@ -289,6 +289,14 @@ INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmmi10.tfm
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmsy10.tfm
 OUTPUT output/Project_Paper.toc
+INPUT output/Project_Paper.lof
+INPUT output/Project_Paper.lof
+INPUT output/Project_Paper.lof
+OUTPUT output/Project_Paper.lof
+INPUT output/Project_Paper.lot
+INPUT output/Project_Paper.lot
+INPUT output/Project_Paper.lot
+OUTPUT output/Project_Paper.lot
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmtt10.tfm
 INPUT /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/workflow.png

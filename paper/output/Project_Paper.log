@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.4.13)  21 APR 2022 21:24
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.4.13)  21 APR 2022 21:46
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -304,94 +304,102 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 \tf@toc=\write3
 \openout3 = `Project_Paper.toc'.
 
- [2] [1] [2]
-</Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/workflow.png, id=23, 886.293pt x 235.863pt>
+ [2] (output/Project_Paper.lof)
+\tf@lof=\write4
+\openout4 = `Project_Paper.lof'.
+
+ [3] (output/Project_Paper.lot)
+\tf@lot=\write5
+\openout5 = `Project_Paper.lot'.
+
+ [4] [1] [2]
+</Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/workflow.png, id=29, 886.293pt x 235.863pt>
 File: /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/workflow.png Graphic file (type png)
 <use /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/workflow.png>
-Package pdftex.def Info: /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/workflow.png  used on input line 211.
+Package pdftex.def Info: /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/workflow.png  used on input line 215.
 (pdftex.def)             Requested size: 500.484pt x 133.19086pt.
  [3 </Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/workflow.png>]
-</Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/cv.png, id=29, 447.636pt x 257.763pt>
+</Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/cv.png, id=36, 447.636pt x 257.763pt>
 File: /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/cv.png Graphic file (type png)
 <use /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/cv.png>
-Package pdftex.def Info: /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/cv.png  used on input line 281.
+Package pdftex.def Info: /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/cv.png  used on input line 285.
 (pdftex.def)             Requested size: 236.01563pt x 135.90578pt.
  [4 </Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/cv.png>]
-</Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/PlayCallByDownAndDist.png, id=34, 905.3825pt x 490.83376pt>
+</Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/PlayCallByDownAndDist.png, id=41, 905.3825pt x 490.83376pt>
 File: /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/PlayCallByDownAndDist.png Graphic file (type png)
 <use /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/PlayCallByDownAndDist.png>
-Package pdftex.def Info: /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/PlayCallByDownAndDist.png  used on input line 345.
+Package pdftex.def Info: /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/PlayCallByDownAndDist.png  used on input line 349.
 (pdftex.def)             Requested size: 500.484pt x 271.32248pt.
-</Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/FormationHuddle.png, id=35, 505.89pt x 380.42125pt>
+</Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/FormationHuddle.png, id=42, 505.89pt x 380.42125pt>
 File: /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/FormationHuddle.png Graphic file (type png)
 <use /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/FormationHuddle.png>
-Package pdftex.def Info: /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/FormationHuddle.png  used on input line 367.
+Package pdftex.def Info: /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/FormationHuddle.png  used on input line 371.
 (pdftex.def)             Requested size: 236.01563pt x 177.48032pt.
  [5 </Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/PlayCallByDownAndDist.png> </Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/FormationHuddle.png>]
-</Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/ScoreDiffSecRem.png, id=42, 896.34875pt x 505.89pt>
+</Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/ScoreDiffSecRem.png, id=48, 896.34875pt x 505.89pt>
 File: /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/ScoreDiffSecRem.png Graphic file (type png)
 <use /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/ScoreDiffSecRem.png>
-Package pdftex.def Info: /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/ScoreDiffSecRem.png  used on input line 381.
+Package pdftex.def Info: /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/ScoreDiffSecRem.png  used on input line 385.
 (pdftex.def)             Requested size: 500.484pt x 282.46278pt.
  [6 </Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/ScoreDiffSecRem.png>]
-</Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/ptr.png, id=51, 947.54pt x 606.265pt>
+</Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/ptr.png, id=57, 947.54pt x 606.265pt>
 File: /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/ptr.png Graphic file (type png)
 <use /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/ptr.png>
-Package pdftex.def Info: /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/ptr.png  used on input line 433.
+Package pdftex.def Info: /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/ptr.png  used on input line 437.
 (pdftex.def)             Requested size: 500.484pt x 320.21806pt.
-</Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/rnnStructure.png, id=52, 837.018pt x 394.419pt>
+</Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/rnnStructure.png, id=58, 837.018pt x 394.419pt>
 File: /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/rnnStructure.png Graphic file (type png)
 <use /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/rnnStructure.png>
-Package pdftex.def Info: /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/rnnStructure.png  used on input line 458.
+Package pdftex.def Info: /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/rnnStructure.png  used on input line 462.
 (pdftex.def)             Requested size: 236.01563pt x 111.21294pt.
  [7 </Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/ptr.png> </Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/rnnStructure.png>] [8]
-</Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/lstmStructure.png, id=64, 700.581pt x 474.573pt>
+</Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/lstmStructure.png, id=70, 700.581pt x 474.573pt>
 File: /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/lstmStructure.png Graphic file (type png)
 <use /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/lstmStructure.png>
-Package pdftex.def Info: /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/lstmStructure.png  used on input line 544.
+Package pdftex.def Info: /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/lstmStructure.png  used on input line 548.
 (pdftex.def)             Requested size: 500.484pt x 339.0347pt.
  [9 </Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/lstmStructure.png>]
-</Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/treeDiagram.png, id=69, 744.6pt x 482.676pt>
+</Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/treeDiagram.png, id=76, 744.6pt x 482.676pt>
 File: /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/treeDiagram.png Graphic file (type png)
 <use /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/treeDiagram.png>
-Package pdftex.def Info: /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/treeDiagram.png  used on input line 659.
+Package pdftex.def Info: /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/treeDiagram.png  used on input line 663.
 (pdftex.def)             Requested size: 236.01563pt x 152.99382pt.
  [10] [11 </Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/treeDiagram.png>] [12]
-</Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/cvResults.png, id=83, 1159.167pt x 359.16pt>
+</Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/cvResults.png, id=89, 1159.167pt x 359.16pt>
 File: /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/cvResults.png Graphic file (type png)
 <use /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/cvResults.png>
-Package pdftex.def Info: /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/cvResults.png  used on input line 797.
+Package pdftex.def Info: /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/cvResults.png  used on input line 801.
 (pdftex.def)             Requested size: 500.484pt x 155.0715pt.
  [13 </Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/cvResults.png>] [14]
-</Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/redZoneByDown.png, id=91, 629.187pt x 354.123pt>
+</Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/redZoneByDown.png, id=97, 629.187pt x 354.123pt>
 File: /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/redZoneByDown.png Graphic file (type png)
 <use /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/redZoneByDown.png>
-Package pdftex.def Info: /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/redZoneByDown.png  used on input line 967.
+Package pdftex.def Info: /Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/redZoneByDown.png  used on input line 971.
 (pdftex.def)             Requested size: 500.484pt x 281.69394pt.
  [15 </Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/figs/redZoneByDown.png>] [16]
-Overfull \hbox (3.94656pt too wide) in paragraph at lines 1055--1056
+Overfull \hbox (3.94656pt too wide) in paragraph at lines 1059--1060
 []\OT1/cmr/m/n/10.95 Patel, P. (2020). Re-trieved April 21, 2022, from https://sites.northwestern.edu/msia/2020/01/31/nfl-
  []
 
 
-Underfull \hbox (badness 8132) in paragraph at lines 1073--1074
-[]\OT1/cmr/m/n/10.95 Olah, C. (2015). Un-der-stand-ing LSTM Net-works. Re-trieved April 21, 2022, from
+Underfull \hbox (badness 10000) in paragraph at lines 1077--1078
+[]\OT1/cmr/m/n/10.95 Olah, C. (2015). \OT1/cmr/m/it/10.95 Un-der-stand-ing LSTM Net-works\OT1/cmr/m/n/10.95 . Re-trieved April 21, 2022, from
  []
 
 [17] (output/Project_Paper.aux) ) 
 Here is how much of TeX's memory you used:
- 4384 strings out of 478268
- 83367 string characters out of 5846347
- 387602 words of memory out of 5000000
- 22561 multiletter control sequences out of 15000+600000
+ 4398 strings out of 478268
+ 83597 string characters out of 5846347
+ 387610 words of memory out of 5000000
+ 22569 multiletter control sequences out of 15000+600000
  475939 words of font info for 50 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,12n,63p,388b,376s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb>
-Output written on output/Project_Paper.pdf (19 pages, 1662697 bytes).
+Output written on output/Project_Paper.pdf (21 pages, 1664925 bytes).
 PDF statistics:
- 175 PDF objects out of 1000 (max. 8388607)
- 97 compressed objects within 1 object stream
+ 182 PDF objects out of 1000 (max. 8388607)
+ 101 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  56 words of extra memory for PDF output out of 10000 (max. 10000000)
 
