@@ -102,18 +102,18 @@
             \paragraph{}
                 An NFL coach combines experience and intuition to predict the play call. 
                 In this work, experience is replaced by labeled data points from the entirety of a single NFL season (2019-2020), and intuition by a supervised machine learning algorithm. 
-                A supervised machine learning task involves teaching a computer to learn the underlying patterns relating the response variable to the features. 
+                A supervised machine learning task involves teaching a computer to learn the underlying patterns relating the response variable to the features \cite{Mehryar12}. 
                 If the model can discern information about the features and response well enough, its predictions should generalize well to unseen instances. 
                 A popular domain of machine learning is the field of deep learning. 
                 Deep learning uses artificial neural networks (ANNs) that loosely resemble a biological brain. 
-                They contain networks of individual neurons or nodes, each with its own activation signal, that is each capable of sending and receiving signals to other nodes (through weights). 
+                They contain networks of individual neurons or nodes, each with its own activation signal, that is each capable of sending and receiving signals to other nodes (through weights) \cite{Haykin08}. 
                 Types of deep learning algorithms vary in complexity and structure. 
                 Here we examine recurrent neural networks (RNNs) and their variant, long short term memory (LSTM) networks. 
-                These kinds of networks were originally designed for speech and text recognition because of their ability to learn sequential patterns. 
+                These kinds of networks were originally designed for speech and text recognition because of their ability to learn sequential patterns \cite{Li15}. 
 
         \subsection{Problem Statement}
             \paragraph{}
-                Prior works have approached play call prediction with machine learning, many implementing complex classification algorithms such as ensemble models and multi-layer perceptrons.
+                Prior works have approached play call prediction with machine learning, many implementing complex classification algorithms such as ensemble models and multi-layer perceptrons \cite{Patel20}.
                 These methods only provide marginal performance increases from simplistic models such as logistic regression.
                 This is because, as is often the case in machine learning tasks, the signal relating the response to the features is only so strong. 
                 Therefore, in these cases, the choice of a complex algorithm provides small return as there is little that the added complexity can pick up on.
@@ -184,7 +184,7 @@
     \begin{multicols*}{2}
         \subsection{Data}
             \paragraph{}
-                Abundant play-by-play data is made easily accessible by the \texttt{nflfastR} package. 
+                Abundant play-by-play data is made easily accessible by the \texttt{nflfastR} package \cite{Carl22}. 
                 Data published officially by the NFL is available so no web-scraping is required as a step in preprocessing.
                 A singular season (2019) was chosen as the sample because the offensive and defensive teams are used as features; teams are subject to change from year to year. 
                 Around 32,000 individual play instances occurred over the course of this season.  
@@ -234,7 +234,7 @@
 
             \paragraph{}
                 For all methods considered, binary and categorical features need to be one-hot encoded.
-                This is because machine learning models aren't able to interperet text strings directly. 
+                This is because machine learning models aren't able to interperet text strings directly \cite{Brownlee20}. 
                 One-hot encoding entails creating a new column for each level of a categorical variable. 
                 The column is a 1 if an instance falls under that category and 0 if not. 
                 One-hot endcoding was chosen over integer encoding to avoid creating any ordinal pattern in the categorical features. 
@@ -267,7 +267,7 @@
         \subsection{Cross Validation Splitting}
             \paragraph{}
                 Cross validation splitting is a method for assessing the performance of a model on unseen data. 
-                The original sample of data is partitioned into three non-overlapping subsets called training, validation, and testing.
+                The original sample of data is partitioned into three non-overlapping subsets called training, validation, and testing \cite{Haykin08}.
                 Training is used for teaching the model to learn the patterns within the sample. 
                 Validation is the first unseen partition and is reserved for evaluating which hyperparameter combinations perform best. 
                 Hyperparameters, unlike model parameters, are not learned during the training algorithm and therefore need to be pre-specified by the user.
@@ -403,7 +403,7 @@
                 \paragraph{}
                     Recurrent neural networks are a special class of artificial neural networks where connections between nodes flow in a consecutive sequence. 
                     This allows them to exhibit memory-like behavior and learn to understand temporal patterns. 
-                    While originally intended for speech and text recognition, they have been applied to a multitude of tasks where data represents a time series.
+                    While originally intended for speech and text recognition \cite{Li15}, they have been applied to a multitude of tasks where data represents a time series.
                 
                 \vspace{-10pt}
 
@@ -417,7 +417,7 @@
 
                     Importantly, each input represents a sequence of feature vectors of length $k$ while the target is the binary label at the end of each sequence. 
                     Hence, in the context of this analysis, the previous $k$ play calls and current conditions are used to predict the play at timestep $t$. 
-                    Now define a simple recurrent network connecting the sequence of inputs to the outputs:
+                    Now define a simple recurrent network connecting the sequence of inputs to the outputs \cite{Dupond19}:
 
                     \begin{itemize}
                         \item $h_t = \sigma_{h}(W_{h}X_{t} + U_{h}h_{t-1} + b_{h})$ 
@@ -463,7 +463,7 @@
                 \vspace{-5pt}
 
                 \paragraph{}
-                    Activation functions are used to map resulting values (hidden or output states) to a normalized range (usually (0,1) or (-1,1)).
+                    Activation functions are used to map resulting values (hidden or output states) to a normalized range (usually (0,1) or (-1,1)) \cite{Murilo22}.
                     For hidden state activation, the choice of hyperbolic tangent (tanh) and exponential linear unit (elu) functions are tuned as hyperparameters, while sigmoid is used for the outputs:
                     
                     \begin{itemize}
@@ -480,7 +480,7 @@
                 \vspace{-10pt}
 
                 \paragraph{}    
-                    For training a recurrent network, a first order iterative optimization algorithm known as mini-batch gradient descent is used with backpropogation. 
+                    For training a recurrent network, a first order iterative optimization algorithm known as mini-batch gradient descent is used with backpropogation \cite{Mozer95}. 
                     First, define a cost function $C(y_i, \hat{y_i})$ relating model predictions to actual observed outcomes. 
                     The cost function is designed to be large when the model missclassifies an observation and small when it correctly classifies. 
                     In this analysis the binary cross entropy (also known as log-loss) cost function is used: $$C(y_i, \hat{y_i}) = -(y_i log(\hat{y_i}) + (1 - y_i)log(1 - \hat{y_i}))$$
@@ -513,7 +513,7 @@
                     A problem with traditional RNNs is that they struggle to pick up on long term patterns.
                     LSTM models have a similar structure with some added complexity that tries to account for long dependencies. 
                     Let the training observation pairs be represented by $(X_i,y_i)$ as they were previously.
-                    Define a new network relating the input sequence to the output:
+                    Define a new network relating the input sequence to the output \cite{Dupond19}:
 
                     \begin{itemize}
                         \item $f_t = \sigma_{g}(W_{f}X_{t} + U_{f}h_{t-1} + b_{f})$ 
@@ -568,7 +568,7 @@
                         Given that the cell state has been updated, the cell must now decide what information to output.
                         The output gate, $o_t$, uses sigmoid activation to transmit information from the previous outputs and current input.
                         This is merged with information from the updated cell state (tanh activation) by pointwise multiplication.
-                        Output is passed to the next LSTM cell (along with the updated cell state) and to the current target prediction.
+                        Output is passed to the next LSTM cell (along with the updated cell state) and to the current target prediction \cite{Olah15}.
                         
                     \vspace{-5pt}
 
@@ -993,8 +993,85 @@
             To the contrary, many of the best performing sequential models happened to consider play call histories of over 10 plays. 
             This challanged the preconceived notion of what a play call sequence would look like. 
             10 plays is around the average amount an offensive team will run on a sustained scoring drive. 
-            It makes sense that the model would need the entire history of a drive to predict accurately, it requires information at every stage in the drive to predict accurately. 
+            It makes sense that the model would need the entire history of a drive to predict accurately, as it would be able to store information at every stage. 
 
 
+        \vspace{-10pt}
+        \paragraph{}
+            Overall, simpler models were favored in this analysis.
+            While there is enough of a performance boost using sequential models to show there is a temporal pattern to the data, this relationship isn't complex enough to warrant the use of multiple hidden recurrent layers.
+            This is an encouraging sign as simple models are easier to construct and take less computational resources to train.
+        \vspace{-10pt}
+        \paragraph{}
+            A general challenge with modeling this data is that it is designed to be deceptive. 
+            The offensive team survives off of tricking the defense and is fully aware of its own tendencies. 
+            It knows what it is expected to do at any given situation and will often do the exact opposite in order to maintain an element of surprise. 
+            Due to this nature, it seems there will always be a less than desirable upper limit on model performance no matter how much quality data is fed into an algorithm.
+
+        \vspace{-10pt}
+        \paragraph{}
+            Another significant limitation to the results of this analysis is the lack of quality data.
+            Two massively critical aspects to determining play calls are not included in the feature space.
+            These factors are the specific formation that offense lines up in and the personnel packages on the field for the current play. 
+            Due to not knowing these details, any model's performance is greatly reduced because there is valuable information influencing the response that it can't account for. 
+            In particular, knowing the formation and personnel would help the model distinguish classes in situations where the play call isn't obvious. 
+            An example would be first and long situations where the frequency of passes and runs is nearly even. 
+            Most of the time this is case where the in game context gives little to no signal. 
+            Knowing whether the offense lines up in bunch formation, with two tight ends and a full back, versus the spread with five wide receivers would allow the classes to be much easier to seperate.
+
+        \vspace{-10pt}
+        \paragraph{}
+            Further improving the data is the clearest path forward to build upon these results. 
+            While not freely available, it does appear that some paid services (designed for Fantasy Football modeling) allow access to personnel/formation data.
+            Exploring these options and attempting a similar modeling strategy as in this analysis would be worthwhile.
+            In addition, simply adding more data from multiple NFL seasons could somewhat improve results. 
+            This analysis focused on one season alone in order to use the teams as features. 
+            Since teams can even change over the course of a single season (injuries, trades, etc.), this assumption might be invalid anyway.
+            A suggestion would be to not consider offensive or defensive team as a feature in the model and use many years of data for training/testing.  
+
+
+\newpage
 \end{multicols*}
+\begin{thebibliography}{999}
+
+    \bibitem{Mehryar12}
+        Mehryar Mohri, Afshin Rostamizadeh, Ameet Talwalkar.
+      \emph{Foundations of Machine Learning}.
+      The MIT Press,
+      2012.
+      
+    \bibitem{Haykin08}
+      Haykin
+    \emph{Neural Networks and Learning Machines}.
+    Pearson, 3rd Edition,
+    2008.
+
+    \bibitem{Li15}
+    X. Li and X. Wu. (2015)
+    \emph{Constructing Long Short-Term Memory based Deep Recurrent Neural Networks for Large Vocabulary Speech Recognition}.
+    IEEE International Conference on Acoustics, Speech and Signal Processing
+
+    \bibitem{Patel20}
+    Patel, P. (2020). Retrieved April 21, 2022, from https://sites.northwestern.edu/msia/2020/01/31/nfl-tendency-analysis-and-basic-play-type-prediction/. 
+
+    \bibitem{Carl22}
+    Carl S, Baldwin B (2022). \emph{nflfastR: Functions to Efficiently Access NFL Play by Play Data}. https://www.nflfastr.com/, https://github.com/nflverse/nflfastR.
+
+    \bibitem{Brownlee20}
+    Brownlee, Jason. (2020). \emph{Ordinal and One-Hot Encodings for Categorical Data}. Machinelearningmastery. https://machinelearningmastery.com/one-hot-encoding-for-categorical-data//
+    
+    \bibitem{Dupond19}
+    Dupond, Samuel (2019). \emph{A thorough review on the current advance of neural network structures}. Annual Reviews in Control.
+
+    \bibitem{Murilo22}
+    Gustineli, Murilo (2022). \emph{A survey on recently proposed activation functions for Deep Learning}. arXiv:2204.02921
+
+    \bibitem{Mozer95}
+    Mozer, M. C. (1995). \emph{A Focused Backpropagation Algorithm for Temporal Pattern Recognition}. In Chauvin, Y.; Rumelhart, D. (eds.). Backpropagation: Theory, architectures, and applications. ResearchGate. Hillsdale, NJ: Lawrence Erlbaum Associates.
+
+    \bibitem{Olah15}
+    Olah, C. (2015). Understanding LSTM Networks. Retrieved April 21, 2022, from https://colah.github.io/posts/2015-08-Understanding-LSTMs/. 
+    
+\end{thebibliography}
+
 \end{document}

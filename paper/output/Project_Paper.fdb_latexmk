@@ -1,6 +1,6 @@
 # Fdb version 3
-["pdflatex"] 1650589937 "/Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/Project_Paper.tex" "output/Project_Paper.pdf" "Project_Paper" 1650589941
-  "/Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/Project_Paper.tex" 1650589936 67994 a6401f3849a746bec364270bf11ba996 ""
+["pdflatex"] 1650597858 "/Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/Project_Paper.tex" "output/Project_Paper.pdf" "Project_Paper" 1650597865
+  "/Users/joe/Documents/Masters_Project/NFL-Play-Call-Prediction-with-LSTM-Neural-Networks/paper/Project_Paper.tex" 1650597848 73232 c2fa2aefd9f27beefe69a664a104cbe9 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/tfm/jknappen/ec/tcrm1095.tfm" 1136768653 1536 02c06700a42be0f5a28664c7273f82e7 ""
@@ -67,7 +67,7 @@
   "/usr/local/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1647878959 4410336 7d30a02e9fa9a16d7d1f8d037ba69641 ""
   "/usr/local/texlive/2022/texmf-var/web2c/pdftex/pdflatex.fmt" 1649876404 2826437 1bc585908ffc5c865e15a38125d7d363 ""
   "/usr/local/texlive/2022/texmf.cnf" 1647878952 577 209b46be99c9075fd74d4c0369380e8c ""
-  "Project_Paper.tex" 1650589936 67994 a6401f3849a746bec364270bf11ba996 ""
+  "Project_Paper.tex" 1650597848 73232 c2fa2aefd9f27beefe69a664a104cbe9 ""
   "figs/FormationHuddle.png" 1650329436 12796 e96ebb5ba5ebe9d2e915bb304ee2d86c ""
   "figs/PlayCallByDownAndDist.png" 1650329062 30791 3cb9de8d6b7666abfd990fc9accb8cec ""
   "figs/ScoreDiffSecRem.png" 1650341249 161213 20263baae5a5a439b3ca698dceb7fb09 ""
@@ -79,8 +79,8 @@
   "figs/rnnStructure.png" 1650397574 290047 13ed39a1540f671aa3426525af15a290 ""
   "figs/treeDiagram.png" 1650492427 298890 1716fe13dcb7b3d07d0aa1dc4a1d9272 ""
   "figs/workflow.png" 1649978357 326418 ce831ecabfeedddd2d548d05776174eb ""
-  "output/Project_Paper.aux" 1650589941 9639 f1ede55b8c5621ef2eb6d2f4e17088c9 "pdflatex"
-  "output/Project_Paper.toc" 1650589941 3231 70de7e3e26c3799f2d5fc8f0adbbd063 "pdflatex"
+  "output/Project_Paper.aux" 1650597865 10406 3c3edf57825a3aee243754414abe127d "pdflatex"
+  "output/Project_Paper.toc" 1650597865 3371 e25c665aebb6cdc384bab30a5c76c287 "pdflatex"
   (generated)
   "output/Project_Paper.aux"
   "output/Project_Paper.log"
