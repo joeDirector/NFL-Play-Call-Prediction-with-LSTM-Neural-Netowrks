@@ -5,6 +5,8 @@
 \usepackage{float}
 \usepackage{caption}
 \usepackage{graphicx}
+\usepackage{amsmath}
+\DeclareMathOperator*{\argminB}{argmin}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{blindtext}
@@ -22,18 +24,6 @@
 \author{Joseph W. Director  \\
 	University of Colorado Denver \\
     MS Statistics
-	\and 
-	Joshua French \\
-    University of Colorado Denver \\
-    Advisor
-    \and
-    Steffen Borgwardt \\
-    University of Colorado Denver \\
-    Graduate Committee
-    \and
-    Florian Pfender \\
-    University of Colorado Denver \\
-    Graduate Committee
 	}
 
 \date{Spring 2022}
@@ -80,7 +70,7 @@
             
             \paragraph{}
                 Gameplay of NFL football is seperated into a sequence of instances called plays. 
-                The two teams on either side of the ball are allowed to reposition themselves and prepare in betweeen these instances. 
+                The two teams on either side of the ball are allowed to reposition themselves and prepare betweeen these instances. 
                 Given this nature, there is immense opportunity to strategize when the game is not in play.
                 Akin to moving pieces on a chessboard, the coaching staff decides their team's best course of action by anticipating their opponent's moves.  
                 For regular plays (i.e. not a kick-off, punt, or field goal attempt), there is a binary option for the type of play the offensive team can do; either a pass or a run.
@@ -176,7 +166,7 @@
                 \hline 
                 Cumulative pass yards & Total yards gained per pass play (at current point) & Numeric \\
                 \hline
-                Pass to run ratio & Current proportion of passes ran to total plays & Numeric \\
+                Pass to run ratio & Current proportion of passes used to total plays & Numeric \\
                 \hline
                 Pass yards allowed & Total yards allowed per pass play (Defteam) & Numeric \\
                 \hline
@@ -255,7 +245,7 @@
             \paragraph{}
                 Cumulative tendencies are not readily available in data loaded from \texttt{nflfastR}. 
                 However, enough information is included in order to build these features. 
-                For the cumulative pass to run ratio, we group the data by offensive team and calculate a running total of passes ran divided by total plays. 
+                For the cumulative pass to run ratio, we group the data by offensive team and calculate a running total of passes used divided by total plays. 
                 This ensures the feature is current up to a given play; reflecting the information the defensive team would have before the snap. 
                 Similarly, we build in features communicating the offensive teams effectiveness at either passing or running.
                 The available data includes how many yards were gained for a given play. 
@@ -268,9 +258,9 @@
                 This aspect is built into the data the same way as offensive tendencies. 
                 Instead of grouping by offensive team, we group by defensive team and add a running total of yards allowed per play type.
         
-        \subsection{Cross Validation Splitting}
+        \subsection{Cross-Validation Splitting}
             \paragraph{}
-                Cross validation splitting is a method for assessing the performance of a model on unseen data. 
+                Cross-validation splitting is a method for assessing the performance of a model on unseen data. 
                 The original sample of data is partitioned into three non-overlapping subsets called training, validation, and testing \cite{Haykin08}.
                 Training is used for teaching the model to learn the patterns within the sample. 
                 Validation is the first unseen partition and is reserved for evaluating which hyperparameter combinations perform best. 
@@ -283,14 +273,14 @@
             \begin{Figure}  
                 \centering
                 \includegraphics[width = \linewidth]{cv.png}
-                \captionof{figure}{Cross Validation Splitting}
-                \label{fig:Cross Validation Splitting}
+                \captionof{figure}{Cross-Validation Splitting}
+                \label{fig:Cross-Validation Splitting}
             \end{Figure}
 
             \vspace{-10pt}
 
             \paragraph{}
-                The cross validation scheme is described in Figure 2.
+                The cross-validation scheme is described in Figure 2.
                 The first 8 weeks of the NFL season are used for the training set, with weeks 9-12 as validation for evaluating hyperparameters.
                 For each model type, we then select the best 20 hyperparameter combinations for testing. 
                 Models with these combinations are retrained using weeks 1-12 and evaluated for final performance using weeks 13-17. 
@@ -341,7 +331,7 @@
                     Large disparities between passes and runs exist for third/fourth and 4+ yards as well as second and long scenarios.
                     This matches what is expected as offensive teams are heavily incentivized to throw the ball on later downs and longer distances (need to gain more yards using only one or two plays). 
                     Perhaps the only surprising aspect of the plot is that passes are more common on third and short.
-                    A possible explanation is that passes are being ran on third and short when the offensive team already knows it is going to go for it on fourth down (if the third down pass attempt fails). 
+                    A possible explanation is that passes are being used on third and short when the offensive team already knows it is going to go for it on fourth down (if the third down pass attempt fails). 
                     They are running the riskier option (a pass attempt) knowing they will get another try and then running the safer option (a run attempt) when there is only one attempt available.  
 
                 \end{multicols*}
@@ -359,12 +349,12 @@
                     This is typically to allow more time for the QB to throw the ball before the defensive team can get to him. 
                     The relationship between shotgun formation and play type is displayed by Figure 4. 
                     For more context, the data is grouped by an additional category called huddle.
-                    This binary feature tells whether the hurry-up offense is being ran. 
+                    This binary feature tells whether the hurry-up offense is being used. 
                     In the hurry-up, the offensive team does not meet in a huddle before running the play; this is typically done late in games to avoid losing time in between plays. 
-                    The figure confirms what is expected. 
+                    Figure 4 confirms what is expected. 
                     Passes are much more common in the shotgun formation and runs are much more common under center. 
                     They remain more common for the hurry-up offense in the shotgun formation but the same result isn't true for under center, huddle plays. 
-                    It is suspected more runs are ran in this scenario because these no huddle plays are ran in normal game conditions (i.e. not with little time remaining, down by many points). 
+                    It is suspected more runs are used in this scenario because they are occurring in normal game conditions (i.e. not with little time remaining, down by many points). 
 
                 \begin{Figure}  
                     \centering
@@ -377,7 +367,7 @@
                 \paragraph{}
                     There is also some visible tendencies relating score differential and amount of time remaining to optimal play call decisions. 
                     This relationship is explored in Figure 5 where second half plays are examined (so that seconds remaining reflects time left in the game).
-                    Passes seem to be called overwhelmingly with less than 500 seconds remaining in the game when a team is down by 0-20 points. 
+                    Passes seem to be called overwhelmingly with fewer than 500 seconds remaining in the game when a team is down by 0-20 points. 
                     During this same time window, runs seem to be called more when a team is leading by 0-20 points.
                     
                     \end{multicols*}
@@ -415,8 +405,8 @@
                     For the models used in this work, let the pair $(X_i, y_i)$ for $i = 1,2,...N$ represent a training observation where:
                     
                     \begin{itemize}
-                        \item $X_i := X_{t-k}^m, X_{t-k+1}^m, ... , X_{t}^m$ i.e. a sequence (size $k$) of design vectors (dimension $m$, the number of features)  
-                        \item $y_i := y_{t}$ i.e. the binary response at time $t$ 
+                        \item $X_i := X_{t-k}^m, X_{t-k+1}^m, ... , X_{t}^m$ i.e. a sequence (size $k$) of design vectors (dimension $m$, the number of features),  
+                        \item $y_i := y_{t}$ i.e. the binary response at time $t$. 
                     \end{itemize}
 
                     Importantly, each input represents a sequence of feature vectors of length $k$ while the target is the binary label at the end of each sequence. 
@@ -424,11 +414,11 @@
                     Now define a simple recurrent network connecting the sequence of inputs to the outputs \cite{Dupond19}:
 
                     \begin{itemize}
-                        \item $h_t = \sigma_{h}(W_{h}X_{t} + U_{h}h_{t-1} + b_{h})$ 
-                        \item $\hat{y_t} = \sigma_{y}(W_{y}h_{t} + b_{y})$ 
+                        \item $h_t = \sigma_{h}(W_{h}X_{t} + U_{h}h_{t-1} + b_{h})$, 
+                        \item $\hat{y_t} = \sigma_{y}(W_{y}h_{t} + b_{y})$, 
                     \end{itemize}
 
-                    Where the variables are given by:
+                    where the variables are given by:
 
 
 
@@ -441,16 +431,16 @@
             \begin{multicols*}{2}
 
                     \begin{itemize}
-                        \item $X_t: $ Input matrix 
-                        \item $h_t := $ Vector of hidden states
-                        \item $W_h := $ Weights connecting inputs to hidden states
-                        \item $U_h := $ Weights connecting hidden states to previous hidden states
-                        \item $b_h := $ Hidden state biases
-                        \item $W_y := $ Weights connecting hidden states to outputs
-                        \item $b_y := $ Output biases
-                        \item $\sigma_h := $ Hidden state activation function
-                        \item $\sigma_y := $ Output activation function
-                        \item $\hat{y_t} := $ Predicted target variable
+                        \item $X_t: $ Input matrix, 
+                        \item $h_t := $ Vector of hidden states,
+                        \item $W_h := $ Weights connecting inputs to hidden states,
+                        \item $U_h := $ Weights connecting hidden states to previous hidden states,
+                        \item $b_h := $ Hidden state biases,
+                        \item $W_y := $ Weights connecting hidden states to outputs,
+                        \item $b_y := $ Output biases,
+                        \item $\sigma_h := $ Hidden state activation function,
+                        \item $\sigma_y := $ Output activation function,
+                        \item $\hat{y_t} := $ Predicted target variable.
                     \end{itemize}
 
                 \paragraph{}
@@ -471,15 +461,15 @@
                     For hidden state activation, the choice of hyperbolic tangent (tanh) and exponential linear unit (elu) functions are tuned as hyperparameters, while sigmoid is used for the outputs:
                     
                     \begin{itemize}
-                        \item tanh $:= \sigma(z) = \frac{e^z - e^{-z}}{e^z + e^{-z}}$ 
-                        \item elu $:= \sigma(z) = \alpha(e^z - 1) \hspace{0.2cm} if \hspace{0.2cm} z \le 0, \hspace{0.2cm} z \hspace{0.2cm} else$
-                        \item sigmoid $:= \sigma(z) = \frac{1}{1 + e^{-z}}$
+                        \item tanh $:= \sigma(z) = \frac{e^z - e^{-z}}{e^z + e^{-z}}$, 
+                        \item elu $:= \sigma(z) = \alpha(e^z - 1) \hspace{0.2cm} if \hspace{0.2cm} z \le 0, \hspace{0.2cm} z \hspace{0.2cm} else$,
+                        \item sigmoid $:= \sigma(z) = \frac{1}{1 + e^{-z}}$.
                     \end{itemize} 
 
                     While the simple RNN structure suffices for showing the mathematical details, it should be noted that added complexity is used for modeling in this work.
                     This includes stacking multiple recurrent and dense layers before the output layer. 
                     When this is the case, the outputs of the previous layer simply feed into the next one.
-                    Many such aspects of the model topology are treated as hyperparameters, as will be discussed later on.
+                    Many such aspects of the model topology are treated as hyperparameters, as will be discussed later.
                 
                 \vspace{-10pt}
 
@@ -487,7 +477,7 @@
                     For training a recurrent network, a first order iterative optimization algorithm known as mini-batch gradient descent is used with backpropogation \cite{Mozer95}. 
                     First, define a cost function $C(y_i, \hat{y_i})$ relating model predictions to actual observed outcomes. 
                     The cost function is designed to be large when the model missclassifies an observation and small when it correctly classifies. 
-                    In this analysis the binary cross entropy (also known as log-loss) cost function is used: $$C(y_i, \hat{y_i}) = -(y_i log(\hat{y_i}) + (1 - y_i)log(1 - \hat{y_i}))$$
+                    In this analysis the binary cross entropy (also known as log-loss) cost function is used: $$C(y_i, \hat{y_i}) = -(y_i \log(\hat{y_i}) + (1 - y_i)\log(1 - \hat{y_i}))$$
                     The value for $\hat{y_i}$ is between 0 and 1, interpreted as the predicted probability the observation belongs to a given class.
                     As $C(y_i, \hat{y_i})$ is a function of model parameters (weights and biases), optimal parameters are found by minimizing the cost function.
                     
@@ -506,8 +496,8 @@
                 \paragraph{}
                     When the model completes a mini-batch, it is called an iteration. 
                     The algorithm will then continue through all mini-batches to complete an epoch (i.e. it has seen all observations in the training sample).
-                    This process will repeat for a pre-specified number of epochs or until a stopping cirteria is met.
-                    Typically, this criteria is to stop when the cost function has not reduced over a given number of epochs. 
+                    This process will repeat for a pre-specified number of epochs or until a stopping criterion is met.
+                    Typically, this criterion is to stop when the cost function has not reduced over a given number of epochs. 
                     
 
             \vspace{-5pt}
@@ -520,27 +510,27 @@
                     Define a new network relating the input sequence to the output \cite{Dupond19}:
 
                     \begin{itemize}
-                        \item $f_t = \sigma_{g}(W_{f}X_{t} + U_{f}h_{t-1} + b_{f})$ 
-                        \item $p_t = \sigma_{g}(W_{p}X_{t} + U_{t}h_{t-1} + b_{p})$
-                        \item $\tilde{c_t} = \sigma_{c}(W_{c}X_{i} + U_{c}h_{t-1} + b_{c})$ 
-                        \item $c_t = f_t \circ c_{t-1} + p_t \circ \tilde{c_t}$
+                        \item $f_t = \sigma_{g}(W_{f}X_{t} + U_{f}h_{t-1} + b_{f})$,
+                        \item $p_t = \sigma_{g}(W_{p}X_{t} + U_{t}h_{t-1} + b_{p})$,
+                        \item $\tilde{c_t} = \sigma_{c}(W_{c}X_{i} + U_{c}h_{t-1} + b_{c})$, 
+                        \item $c_t = f_t \circ c_{t-1} + p_t \circ \tilde{c_t}$,
                         \item $h_t = o_t \circ \sigma_c(c_t)$
-                        \item $o_t = \sigma_{g}(W_{y}X_{t} + U_{y}h_{t-1} + b_{o})$
+                        \item $o_t = \sigma_{g}(W_{y}X_{t} + U_{y}h_{t-1} + b_{o})$,
                     \end{itemize}
 
-                    Where the variables are defined as follows:
+                    where the variables are defined as follows:
 
                     \begin{itemize}
-                        \item $f_t := $ Forget gate   
-                        \item $p_t := $ Update gate
-                        \item $\tilde{c_t} := $ Cell update  
-                        \item $c_t := $ Cell state
-                        \item $h_t := $ Hidden state
-                        \item $o_t := $ Output gate
-                        \item $W,U,b := $ Weights and Biases
-                        \item $\sigma_g := $ Sigmoid activation
-                        \item $\sigma_c := $ Hyperbolic Tangent activation
-                        \item $\circ := $ Pointwise vector multiplication
+                        \item $f_t := $ Forget gate,   
+                        \item $p_t := $ Update gate,
+                        \item $\tilde{c_t} := $ Cell update, 
+                        \item $c_t := $ Cell state,
+                        \item $h_t := $ Hidden state,
+                        \item $o_t := $ Output gate,
+                        \item $W,U,b := $ Weights and Biases,
+                        \item $\sigma_g := $ Sigmoid activation,
+                        \item $\sigma_c := $ Hyperbolic Tangent activation,
+                        \item $\circ := $ Pointwise vector multiplication.
                     \end{itemize}
 
                     \end{multicols*}
@@ -580,7 +570,7 @@
                         The training process for LSTM neural networks is the same as in simple RNNs. 
                         Mini-batch gradient descent with backpropogation is used with the same cost function (binary cross entropy) to train all weights and biases.
                         As is the case with RNNs, added complexity of LSTM topology is explored in this analysis.
-                        The structure of a sequential model, whether LSTM or RNN, is tuned via various a hyperparameters.
+                        The structure of a sequential model, whether LSTM or RNN, is tuned via various hyperparameters.
                         A list of hyperparameters chosen for model tuning of sequential neural networks is given in Table 3. 
 
                     \end{multicols*}
@@ -684,20 +674,20 @@
 
                 \paragraph{}
                     As the name suggests, another form of the gradient descent algorithm is used for optimization.
-                    Letting the data be represented by $(X_i,y_i)$, $i=1,..,N$, let $\gamma$ denoted the log(odds) of the target variable i.e. $log(\frac{passes}{runs})$.
-                    Define a cost function as: $$C(y_i, \gamma) = -y_i\gamma + log(1+e^\gamma)$$
+                    Letting the data be represented by $(X_i,y_i)$, $i=1,..,N$, let $\gamma$ denoted the log(odds) of the target variable i.e. $\log(\frac{passes}{runs})$.
+                    Define a cost function as: $$C(y_i, \gamma) = -y_i\gamma + \log(1+e^\gamma)$$
                     The process begins by determining an initial model defined by a single constant leaf node for all $N$ observations. 
-                    This is done by minimizing $\gamma$ over the sum of the cost function across $N$: $$M_0 = argmin_\gamma \sum_{i=1}^N C(y_i, \gamma)$$ 
+                    This is done by minimizing $\gamma$ over the sum of the cost function across $N$: $$M_0 = \argminB_\gamma \sum_{i=1}^N C(y_i, \gamma)$$ 
                     Where $M_0$ represents the initial model. 
                     Given this choice of loss function, the value for $\gamma$ that minimizes this sum is simply the log(odds) based on observed values in the data.
                     The model iterates by fitting decision trees to residuals between observed values and the previous probability predictions.
                     For $j=1,...,J$:
 
                     \begin{enumerate}
-                        \item Find the residual $r_{ij} = -\frac{\partial C(y_i,M_{j-1}(X_i))}{\partial M_{j-1}}$
-                        \item Fit a decision tree using the features and the residuals $(X_i,r_{ij})$
-                        \item Calculate output values in the new decision tree $\gamma_j = argmin_\gamma \sum_{i=1}^N C(y_i, M_{j-1}(X_i) + \gamma h_j(X_i))$ 
-                        \item Update the model $M_j = M_{j-1} + \gamma_j h_j$
+                        \item Find the residual $r_{ij} = -\frac{\partial C(y_i,M_{j-1}(X_i))}{\partial M_{j-1}}$.
+                        \item Fit a decision tree using the features and the residuals $(X_i,r_{ij})$.
+                        \item Calculate output values in the new decision tree $\gamma_j = \argminB_\gamma \sum_{i=1}^N C(y_i, M_{j-1}(X_i) + \gamma h_j(X_i))$. 
+                        \item Update the model $M_j = M_{j-1} + \gamma_j h_j$.
                     \end{enumerate}
 
                     The final model ouput will be $M_J$.
@@ -712,7 +702,7 @@
                     In logistic regression, this comes in the form of an elastic net. 
                     An elastic net is a way to penalize the cost function by mixing $L_1$ and $L_2$ norms. 
                     The ratio controls how much $L_1$ penalization to use relative to $L_2$. 
-                    Penalization constrains the parameters during optimization and forces the algorithm to favor more simplistic models, which helps if the model overfits. 
+                    Penalization constrains the parameters during optimization and forces the algorithm to favor simpler models, which helps if the model overfits. 
                 
                 \vspace{-10pt}
                 
@@ -764,7 +754,7 @@
                 Hyperband is designed to allocate more resources (i.e. training iterations) to models that are promising in their early stages. 
                 The algorithm builds off the idea of successive halving \cite{Jameison17}.
                 In successive halving, a large number of randomly chosen combinations are ran for a few iterations. 
-                The top half performing combinations are chosen to continue training for more iterations and the rest are discared.
+                The top half performing combinations are chosen to continue training for more iterations and the rest are discarded.
                 This is repeated until one model remains. 
                 Successive halving uses a finite budget $B$ (total training iterations) and fixes a number of combinations to consider $n$.
                 A problem with this approach is that it does not optimize the tradeoff between trying many combinations (large $n$) and trying fewer combinations but for more iterations (large $B/n$).
@@ -785,7 +775,7 @@
             \vspace{-15pt}
             
             \paragraph{}
-                In order to scale up the tuning process, free to use computing resources were provisioned from GCP.
+                In order to scale up the tuning process, free to use computing resources were provisioned from Google Cloud Platform.
                 A distributed search strategy allows multiple model configurations to be ran in parallel, significantly expediting the algorithm.  
                 For considering the top 20 models to pass on to final testing, the cost function is evaluated on the validation set, and the models with the lowest validation cost are chosen. 
                 The final metrics reported (on the test set) are the binary accuracy and ROC-AUC (area under the receiver operating characteristic curve). 
@@ -799,7 +789,7 @@
     \end{multicols*}
     \begin{figure}[ht]
         \includegraphics[width = \linewidth]{cvResults.png}
-        \caption{Cross Validation Results}
+        \caption{Cross-Validation Results}
         \label{fig:CV Results}
     \end{figure}
     \begin{multicols*}{2}           
@@ -826,7 +816,7 @@
                 There is an expected drop off in performance going from training to testing as the model hasn't seen the test data. 
                 A large discrepancy between training and testing metrics is indication of the model overfitting.
                 This is apparent for GBDT, where a considerable performance dropoff occurrs between training and validation/testing.
-                Even though its final test metric is slightly worse, the logistic regression model may be preffered over GBDT as its metrics remain steady over the folds. 
+                Even though its final test metric is slightly worse, the logistic regression model may be preferred over GBDT as its metrics remain steady over the folds. 
                  
         
         \subsection{Selected Hyperparameters}
@@ -940,7 +930,8 @@
 
             \paragraph{}
                 A play is considered to be in the red zone when the offensive team is within 20 yards or less of the opposition's goal line. 
-                Converting red zone plays into touchdowns is critical for the offensive team, likewise, it is critical for the defensive team to force the offensive team into a field goal attempt.
+                Converting red zone plays into touchdowns is critical for the offensive team.
+                Likewise, it is critical for the defensive team to force the offensive team into a field goal attempt.
                 Also, it is not apparently obvious whether a red zone play will be a pass or a run. 
                 In the entire data set, 54\% of red zone plays were passes while 46\% of red zone plays were runs. 
                 So, red zone plays present a particularly useful case for the model because 1) knowing the outcome provides an especially helpful competitive advantage and 2) it is hard to tell what the outcome will be.

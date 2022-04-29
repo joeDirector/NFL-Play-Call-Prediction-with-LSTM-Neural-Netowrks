@@ -1,5 +1,5 @@
 \contentsline {figure}{\numberline {1}{\ignorespaces Overall Methodologic Workflow \relax }}{3}{}%
-\contentsline {figure}{\numberline {2}{\ignorespaces Cross Validation Splitting\relax }}{4}{}%
+\contentsline {figure}{\numberline {2}{\ignorespaces Cross-Validation Splitting\relax }}{4}{}%
 \contentsline {figure}{\numberline {3}{\ignorespaces Relative Play Call Frequency by Down and Distance\relax }}{5}{}%
 \contentsline {figure}{\numberline {4}{\ignorespaces Play Frequency by Formation, Huddle\relax }}{5}{}%
 \contentsline {figure}{\numberline {5}{\ignorespaces Play Call by Score Differential and Seconds Remaining\relax }}{6}{}%
@@ -7,5 +7,5 @@
 \contentsline {figure}{\numberline {7}{\ignorespaces Basic RNN Topology\relax }}{7}{}%
 \contentsline {figure}{\numberline {8}{\ignorespaces LSTM Topology\relax }}{9}{}%
 \contentsline {figure}{\numberline {9}{\ignorespaces Simple Tree Diagram\relax }}{11}{}%
-\contentsline {figure}{\numberline {10}{\ignorespaces Cross Validation Results\relax }}{13}{}%
+\contentsline {figure}{\numberline {10}{\ignorespaces Cross-Validation Results\relax }}{13}{}%
 \contentsline {figure}{\numberline {11}{\ignorespaces Prediction Metrics of Red Zone Plays by Down\relax }}{15}{}%
